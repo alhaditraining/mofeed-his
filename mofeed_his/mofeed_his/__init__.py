@@ -1,0 +1,1 @@
+"""Al-Mofeed HIS module."""
