@@ -104,7 +104,7 @@
    "type": "DocType"
   },
   {
-   "color": "Orange",
+   "color": "#FFA500",
    "doc_view": "List",
    "format": "{} Open",
    "label": "Patient Appointment",
