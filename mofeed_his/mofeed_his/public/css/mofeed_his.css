@@ -1,0 +1,68 @@
+/**
+ * Al-Mofeed HIS - Main Stylesheet
+ * Hospital Information System
+ * 
+ * This file contains global styles for the mofeed_his app.
+ * Page-specific styles are in their respective page directories.
+ */
+
+/* Import Google Fonts for Arabic and English */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ============================================
+   Global CSS Variables
+   ============================================ */
+:root {
+    /* Healthcare Clean Color Scheme */
+    --mofeed-primary: #0C82E6;
+    --mofeed-secondary: #26C6DA;
+    --mofeed-accent: #4CAF50;
+    --mofeed-background: #F9FAFB;
+    --mofeed-text: #1F2937;
+    --mofeed-text-light: #6B7280;
+    --mofeed-border: #E5E7EB;
+    --mofeed-white: #FFFFFF;
+    --mofeed-danger: #EF4444;
+    --mofeed-warning: #F59E0B;
+    --mofeed-success: #10B981;
+}
+
+/* ============================================
+   Global Font Settings
+   ============================================ */
+body {
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Arabic/RTL Font Override */
+html[lang="ar"] body,
+[dir="rtl"] body {
+    font-family: 'Cairo', 'Noto Sans Arabic', sans-serif;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.mofeed-primary-bg {
+    background-color: var(--mofeed-primary);
+}
+
+.mofeed-secondary-bg {
+    background-color: var(--mofeed-secondary);
+}
+
+.mofeed-accent-bg {
+    background-color: var(--mofeed-accent);
+}
+
+.mofeed-primary-text {
+    color: var(--mofeed-primary);
+}
+
+.mofeed-secondary-text {
+    color: var(--mofeed-secondary);
+}
+
+.mofeed-accent-text {
+    color: var(--mofeed-accent);
+}
