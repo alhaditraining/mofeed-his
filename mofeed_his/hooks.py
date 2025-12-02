@@ -14,6 +14,8 @@ app_icon = "fa fa-hospital-o"
 app_color = "#0C82E6"  # Medical Blue - primary color from theme guidelines
 
 # Required apps
+# NOTE: This app requires ERPNext and Healthcare app to be installed first.
+# Install with: bench get-app healthcare && bench --site <site> install-app healthcare
 required_apps = ["frappe", "erpnext", "healthcare"]
 
 # Includes in <head>

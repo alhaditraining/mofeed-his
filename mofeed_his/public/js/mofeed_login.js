@@ -283,6 +283,8 @@
    * @returns {string} Translated message
    */
   function getTranslatedMessage(key, language) {
+    // NOTE: Kurdish (ku) translations use Sorani Kurdish (Central Kurdish).
+    // These are placeholder translations and should be verified by a native speaker.
     const messages = {
       please_fill_fields: {
         ar: 'يرجى ملء جميع الحقول المطلوبة',
