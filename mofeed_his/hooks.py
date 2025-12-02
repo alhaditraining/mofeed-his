@@ -1,0 +1,6 @@
+app_name = "mofeed_his"
+app_title = "Mofeed HIS"
+app_publisher = "Mofeed"
+app_description = "Hospital Information System for clinics and hospitals in Iraq"
+app_email = "info@mofeed.iq"
+app_license = "MIT"
