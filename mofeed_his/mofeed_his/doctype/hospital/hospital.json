@@ -1,0 +1,217 @@
+{
+ "name": "Hospital",
+ "module": "Mofeed HIS",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_info_section",
+  "hospital_name",
+  "hospital_name_arabic",
+  "hospital_code",
+  "column_break_1",
+  "hospital_type",
+  "is_active",
+  "mrn_prefix",
+  "location_section",
+  "address",
+  "city",
+  "governorate",
+  "column_break_2",
+  "phone",
+  "email",
+  "website",
+  "settings_section",
+  "default_price_list",
+  "default_currency",
+  "column_break_3",
+  "logo",
+  "working_hours_section",
+  "working_hours",
+  "notes_section",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_info_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Information"
+  },
+  {
+   "fieldname": "hospital_name",
+   "fieldtype": "Data",
+   "label": "Hospital Name (English)",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "hospital_name_arabic",
+   "fieldtype": "Data",
+   "label": "اسم المستشفى (Hospital Name Arabic)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "hospital_code",
+   "fieldtype": "Data",
+   "label": "Hospital Code",
+   "reqd": 1,
+   "unique": 1,
+   "description": "Short unique code for this facility (e.g., KRB for Karbala Hospital)"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "hospital_type",
+   "fieldtype": "Select",
+   "label": "Hospital Type",
+   "options": "\nGeneral Hospital\nSpecialty Hospital\nPolyclinic\nMedical Center\nClinic",
+   "default": "Medical Center"
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active",
+   "default": 1
+  },
+  {
+   "fieldname": "mrn_prefix",
+   "fieldtype": "Data",
+   "label": "MRN Prefix",
+   "description": "Prefix for Medical Record Numbers (e.g., 'KRB' for 2025-KRB-00001)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "location_section",
+   "fieldtype": "Section Break",
+   "label": "Location & Contact"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fieldname": "governorate",
+   "fieldtype": "Select",
+   "label": "Governorate / المحافظة",
+   "options": "\nBaghdad\nBasra\nNinawa\nErbil\nSulaymaniyah\nDuhok\nKirkuk\nAnbar\nBabil\nKarbala\nNajaf\nDiyala\nWasit\nMaysan\nDhi Qar\nMuthanna\nQadisiyyah\nSalah al-Din",
+   "description": "Iraqi governorate where the hospital is located"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "label": "Website"
+  },
+  {
+   "fieldname": "settings_section",
+   "fieldtype": "Section Break",
+   "label": "Settings"
+  },
+  {
+   "fieldname": "default_price_list",
+   "fieldtype": "Link",
+   "label": "Default Price List",
+   "options": "Price List",
+   "description": "Default price list for billing at this hospital"
+  },
+  {
+   "fieldname": "default_currency",
+   "fieldtype": "Link",
+   "label": "Default Currency",
+   "options": "Currency",
+   "default": "IQD"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Attach Image",
+   "label": "Hospital Logo"
+  },
+  {
+   "fieldname": "working_hours_section",
+   "fieldtype": "Section Break",
+   "label": "Working Hours",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "working_hours",
+   "fieldtype": "Table",
+   "label": "Working Hours",
+   "options": "Hospital Working Hours"
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Notes",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "Notes"
+  }
+ ],
+ "image_field": "logo",
+ "autoname": "field:hospital_code",
+ "search_fields": "hospital_name, hospital_name_arabic, city",
+ "title_field": "hospital_name",
+ "show_title_field_in_link": 1,
+ "sort_field": "hospital_name",
+ "sort_order": "ASC",
+ "track_changes": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  },
+  {
+   "role": "Healthcare Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "Physician",
+   "read": 1
+  },
+  {
+   "role": "Nursing User",
+   "read": 1
+  },
+  {
+   "role": "Laboratory User",
+   "read": 1
+  }
+ ]
+}

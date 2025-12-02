@@ -1,0 +1,278 @@
+{
+ "name": "Patient Extension",
+ "module": "Mofeed HIS",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "engine": "InnoDB",
+ "description": "Extension fields for Patient doctype - Links to Healthcare Patient and adds Iraqi-specific fields",
+ "field_order": [
+  "patient_link_section",
+  "patient",
+  "patient_name",
+  "mrn_section",
+  "mofeed_mrn",
+  "registration_hospital",
+  "registration_date",
+  "column_break_mrn",
+  "patient_type",
+  "is_vip",
+  "referral_source",
+  "iraq_info_section",
+  "national_id",
+  "national_id_type",
+  "nationality",
+  "column_break_iraq",
+  "governorate",
+  "district",
+  "insurance_section",
+  "insurance_company",
+  "insurance_plan",
+  "insurance_card_number",
+  "column_break_ins",
+  "insurance_expiry",
+  "coverage_percentage",
+  "copay_amount",
+  "emergency_section",
+  "emergency_contact_name",
+  "emergency_contact_relation",
+  "emergency_contact_phone",
+  "notes_section",
+  "medical_alerts",
+  "staff_notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "patient_link_section",
+   "fieldtype": "Section Break",
+   "label": "Patient Link"
+  },
+  {
+   "fieldname": "patient",
+   "fieldtype": "Link",
+   "label": "Patient",
+   "options": "Patient",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "description": "Link to Healthcare Patient doctype"
+  },
+  {
+   "fieldname": "patient_name",
+   "fieldtype": "Data",
+   "label": "Patient Name",
+   "fetch_from": "patient.patient_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "mrn_section",
+   "fieldtype": "Section Break",
+   "label": "Medical Record Number"
+  },
+  {
+   "fieldname": "mofeed_mrn",
+   "fieldtype": "Data",
+   "label": "MRN (Medical Record Number)",
+   "unique": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "bold": 1,
+   "description": "Format: YYYY-HOSPITAL-NNNNN (e.g., 2025-KRB-00001)"
+  },
+  {
+   "fieldname": "registration_hospital",
+   "fieldtype": "Link",
+   "label": "Registration Hospital",
+   "options": "Hospital",
+   "description": "Hospital where patient was first registered"
+  },
+  {
+   "fieldname": "registration_date",
+   "fieldtype": "Date",
+   "label": "Registration Date",
+   "default": "Today"
+  },
+  {
+   "fieldname": "column_break_mrn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "patient_type",
+   "fieldtype": "Select",
+   "label": "Patient Type",
+   "options": "\nCash\nInsured\nVIP\nCharity\nEmployee\nGovernment",
+   "default": "Cash"
+  },
+  {
+   "fieldname": "is_vip",
+   "fieldtype": "Check",
+   "label": "VIP Patient"
+  },
+  {
+   "fieldname": "referral_source",
+   "fieldtype": "Select",
+   "label": "Referral Source",
+   "options": "\nWalk-in\nDoctor Referral\nInsurance\nAdvertisement\nOnline\nOther"
+  },
+  {
+   "fieldname": "iraq_info_section",
+   "fieldtype": "Section Break",
+   "label": "Iraqi Identification"
+  },
+  {
+   "fieldname": "national_id",
+   "fieldtype": "Data",
+   "label": "National ID / رقم الهوية",
+   "description": "Iraqi National ID or Civil ID number"
+  },
+  {
+   "fieldname": "national_id_type",
+   "fieldtype": "Select",
+   "label": "ID Type / نوع الهوية",
+   "options": "\nNational ID (البطاقة الموحدة)\nCivil ID (هوية الأحوال المدنية)\nPassport (جواز السفر)\nResidency Card (بطاقة الإقامة)"
+  },
+  {
+   "fieldname": "nationality",
+   "fieldtype": "Link",
+   "label": "Nationality",
+   "options": "Country",
+   "default": "Iraq"
+  },
+  {
+   "fieldname": "column_break_iraq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "governorate",
+   "fieldtype": "Select",
+   "label": "Governorate / المحافظة",
+   "options": "\nBaghdad\nBasra\nNinawa\nErbil\nSulaymaniyah\nDuhok\nKirkuk\nAnbar\nBabil\nKarbala\nNajaf\nDiyala\nWasit\nMaysan\nDhi Qar\nMuthanna\nQadisiyyah\nSalah al-Din",
+   "description": "Patient's home governorate"
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Data",
+   "label": "District / القضاء"
+  },
+  {
+   "fieldname": "insurance_section",
+   "fieldtype": "Section Break",
+   "label": "Insurance Information"
+  },
+  {
+   "fieldname": "insurance_company",
+   "fieldtype": "Link",
+   "label": "Insurance Company",
+   "options": "Customer",
+   "description": "Insurance company (Customer doctype with is_insurance_company=1)"
+  },
+  {
+   "fieldname": "insurance_plan",
+   "fieldtype": "Data",
+   "label": "Insurance Plan"
+  },
+  {
+   "fieldname": "insurance_card_number",
+   "fieldtype": "Data",
+   "label": "Insurance Card Number"
+  },
+  {
+   "fieldname": "column_break_ins",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "insurance_expiry",
+   "fieldtype": "Date",
+   "label": "Insurance Expiry Date"
+  },
+  {
+   "fieldname": "coverage_percentage",
+   "fieldtype": "Percent",
+   "label": "Coverage Percentage",
+   "default": 0,
+   "description": "Percentage of costs covered by insurance"
+  },
+  {
+   "fieldname": "copay_amount",
+   "fieldtype": "Currency",
+   "label": "Co-pay Amount",
+   "description": "Fixed amount patient pays per visit"
+  },
+  {
+   "fieldname": "emergency_section",
+   "fieldtype": "Section Break",
+   "label": "Emergency Contact"
+  },
+  {
+   "fieldname": "emergency_contact_name",
+   "fieldtype": "Data",
+   "label": "Emergency Contact Name"
+  },
+  {
+   "fieldname": "emergency_contact_relation",
+   "fieldtype": "Select",
+   "label": "Relation",
+   "options": "\nSpouse\nParent\nChild\nSibling\nFriend\nOther"
+  },
+  {
+   "fieldname": "emergency_contact_phone",
+   "fieldtype": "Data",
+   "label": "Emergency Contact Phone",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Notes & Alerts"
+  },
+  {
+   "fieldname": "medical_alerts",
+   "fieldtype": "Small Text",
+   "label": "Medical Alerts",
+   "description": "Important medical alerts (allergies, conditions, etc.) - displayed prominently"
+  },
+  {
+   "fieldname": "staff_notes",
+   "fieldtype": "Text",
+   "label": "Staff Notes",
+   "description": "Internal notes for staff"
+  }
+ ],
+ "autoname": "field:mofeed_mrn",
+ "naming_rule": "By fieldname",
+ "search_fields": "patient, patient_name, national_id, insurance_card_number",
+ "title_field": "patient_name",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  },
+  {
+   "role": "Healthcare Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "Physician",
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "Nursing User",
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "Laboratory User",
+   "read": 1
+  }
+ ]
+}

@@ -1,0 +1,252 @@
+{
+ "name": "Clinic",
+ "module": "Mofeed HIS",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_info_section",
+  "clinic_name",
+  "clinic_name_arabic",
+  "clinic_code",
+  "column_break_1",
+  "hospital",
+  "is_active",
+  "specialty",
+  "services_section",
+  "specialty_type",
+  "consultation_fee",
+  "follow_up_fee",
+  "column_break_2",
+  "appointment_duration",
+  "max_daily_appointments",
+  "default_services",
+  "staff_section",
+  "default_doctor",
+  "doctors",
+  "nurses",
+  "location_section",
+  "room_number",
+  "floor",
+  "building",
+  "column_break_3",
+  "phone_extension",
+  "schedule_section",
+  "working_days",
+  "notes_section",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_info_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Information"
+  },
+  {
+   "fieldname": "clinic_name",
+   "fieldtype": "Data",
+   "label": "Clinic Name (English)",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "clinic_name_arabic",
+   "fieldtype": "Data",
+   "label": "اسم العيادة (Clinic Name Arabic)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "clinic_code",
+   "fieldtype": "Data",
+   "label": "Clinic Code",
+   "unique": 1,
+   "description": "Short code for this clinic (auto-generated if empty)"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "hospital",
+   "fieldtype": "Link",
+   "label": "Hospital",
+   "options": "Hospital",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active",
+   "default": 1
+  },
+  {
+   "fieldname": "specialty",
+   "fieldtype": "Link",
+   "label": "Medical Specialty",
+   "options": "Medical Department",
+   "description": "Link to Healthcare Medical Department doctype"
+  },
+  {
+   "fieldname": "services_section",
+   "fieldtype": "Section Break",
+   "label": "Services & Fees"
+  },
+  {
+   "fieldname": "specialty_type",
+   "fieldtype": "Select",
+   "label": "Specialty Type",
+   "options": "\nGeneral Practice\nInternal Medicine\nPediatrics\nObstetrics & Gynecology\nSurgery\nOrthopedics\nDermatology\nCardiology\nNeurology\nOphthalmology\nENT\nUrology\nGastroenterology\nPulmonology\nEndocrinology\nNephrology\nPsychiatry\nDentistry\nRadiology\nPathology\nEmergency Medicine\nPhysical Therapy\nOther"
+  },
+  {
+   "fieldname": "consultation_fee",
+   "fieldtype": "Currency",
+   "label": "Consultation Fee (New Visit)",
+   "description": "Default consultation fee for new patients"
+  },
+  {
+   "fieldname": "follow_up_fee",
+   "fieldtype": "Currency",
+   "label": "Follow-up Fee",
+   "description": "Default fee for follow-up visits"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "appointment_duration",
+   "fieldtype": "Int",
+   "label": "Appointment Duration (minutes)",
+   "default": 15,
+   "description": "Default appointment slot duration"
+  },
+  {
+   "fieldname": "max_daily_appointments",
+   "fieldtype": "Int",
+   "label": "Max Daily Appointments",
+   "default": 30,
+   "description": "Maximum appointments per day for this clinic"
+  },
+  {
+   "fieldname": "default_services",
+   "fieldtype": "Table",
+   "label": "Default Services",
+   "options": "Clinic Default Service",
+   "description": "Services commonly billed from this clinic"
+  },
+  {
+   "fieldname": "staff_section",
+   "fieldtype": "Section Break",
+   "label": "Staff"
+  },
+  {
+   "fieldname": "default_doctor",
+   "fieldtype": "Link",
+   "label": "Default Doctor",
+   "options": "Healthcare Practitioner",
+   "description": "Primary doctor for this clinic"
+  },
+  {
+   "fieldname": "doctors",
+   "fieldtype": "Table",
+   "label": "Assigned Doctors",
+   "options": "Clinic Doctor"
+  },
+  {
+   "fieldname": "nurses",
+   "fieldtype": "Table",
+   "label": "Assigned Nurses",
+   "options": "Clinic Nurse"
+  },
+  {
+   "fieldname": "location_section",
+   "fieldtype": "Section Break",
+   "label": "Location",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "room_number",
+   "fieldtype": "Data",
+   "label": "Room Number"
+  },
+  {
+   "fieldname": "floor",
+   "fieldtype": "Data",
+   "label": "Floor"
+  },
+  {
+   "fieldname": "building",
+   "fieldtype": "Data",
+   "label": "Building"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "phone_extension",
+   "fieldtype": "Data",
+   "label": "Phone Extension"
+  },
+  {
+   "fieldname": "schedule_section",
+   "fieldtype": "Section Break",
+   "label": "Schedule",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "working_days",
+   "fieldtype": "Table",
+   "label": "Working Days & Hours",
+   "options": "Clinic Working Day"
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Notes",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "Notes"
+  }
+ ],
+ "autoname": "format:{hospital}-{clinic_code}",
+ "naming_rule": "Expression",
+ "search_fields": "clinic_name, clinic_name_arabic, hospital, specialty_type",
+ "title_field": "clinic_name",
+ "show_title_field_in_link": 1,
+ "sort_field": "clinic_name",
+ "sort_order": "ASC",
+ "track_changes": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  },
+  {
+   "role": "Healthcare Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "Physician",
+   "read": 1
+  },
+  {
+   "role": "Nursing User",
+   "read": 1
+  },
+  {
+   "role": "Laboratory User",
+   "read": 1
+  }
+ ]
+}

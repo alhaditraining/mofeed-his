@@ -1,0 +1,730 @@
+{# 
+Custom Login Page Template for Al-Mofeed HIS
+
+This template provides a multi-language login experience with:
+- Arabic (العربية) - Primary language for reception staff
+- English - Preferred by doctors
+- Kurdish (کوردی) - Future support
+
+Integration with ERPNext/Frappe:
+--------------------------------
+1. Extends frappe's web template for consistent styling
+2. Uses frappe.call() for AJAX authentication
+3. Integrates with frappe.session for language preferences
+4. Supports frappe's CSRF protection
+
+The template follows the UI wireframes defined in docs/ui-wireframes.md
+with a clean medical-themed design.
+#}
+
+{% extends "templates/web.html" %}
+
+{% block title %}{{ _("Login") }} - Al-Mofeed HIS{% endblock %}
+
+{% block page_content %}
+<div class="mofeed-login-container">
+    <div class="login-card">
+        {# Logo and Title Section #}
+        <div class="login-header">
+            <div class="logo-container">
+                {% if logo %}
+                <img src="{{ logo }}" alt="Al-Mofeed HIS" class="login-logo">
+                {% else %}
+                <div class="logo-placeholder">
+                    <i class="fa fa-hospital-o"></i>
+                </div>
+                {% endif %}
+            </div>
+            <h1 class="login-title">المفيد لإدارة المستشفيات</h1>
+            <h2 class="login-subtitle">Al-Mofeed Hospital Information System</h2>
+        </div>
+
+        {# Login Form #}
+        <form id="mofeed-login-form" class="login-form" onsubmit="return mofeedLogin(event)">
+            {# CSRF Token #}
+            <input type="hidden" name="csrf_token" value="{{ frappe.session.csrf_token }}">
+            
+            {# Username Field #}
+            <div class="form-group">
+                <label for="login-username">
+                    <span class="label-en">Username</span>
+                    <span class="label-ar">اسم المستخدم</span>
+                </label>
+                <div class="input-with-icon">
+                    <i class="fa fa-user"></i>
+                    <input 
+                        type="text" 
+                        id="login-username" 
+                        name="usr" 
+                        class="form-control" 
+                        placeholder="{{ _('Enter your username') }}"
+                        autocomplete="username"
+                        required
+                        autofocus
+                    >
+                </div>
+            </div>
+
+            {# Password Field #}
+            <div class="form-group">
+                <label for="login-password">
+                    <span class="label-en">Password</span>
+                    <span class="label-ar">كلمة المرور</span>
+                </label>
+                <div class="input-with-icon">
+                    <i class="fa fa-lock"></i>
+                    <input 
+                        type="password" 
+                        id="login-password" 
+                        name="pwd" 
+                        class="form-control" 
+                        placeholder="{{ _('Enter your password') }}"
+                        autocomplete="current-password"
+                        required
+                    >
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">
+                        <i class="fa fa-eye" id="password-toggle-icon"></i>
+                    </button>
+                </div>
+            </div>
+
+            {# Language Selector #}
+            <div class="form-group language-selector">
+                <label>
+                    <span class="label-en">Language</span>
+                    <span class="label-ar">اللغة</span>
+                    <span class="label-ku">زمان</span>
+                </label>
+                <div class="language-options">
+                    <label class="language-option">
+                        <input type="radio" name="language" value="ar" {{ "checked" if current_language == "ar" else "" }}>
+                        <span class="language-label">
+                            <span class="flag">🇮🇶</span>
+                            <span>العربية</span>
+                        </span>
+                    </label>
+                    <label class="language-option">
+                        <input type="radio" name="language" value="en" {{ "checked" if current_language == "en" else "" }}>
+                        <span class="language-label">
+                            <span class="flag">🇬🇧</span>
+                            <span>English</span>
+                        </span>
+                    </label>
+                    <label class="language-option">
+                        <input type="radio" name="language" value="ckb" {{ "checked" if current_language == "ckb" else "" }}>
+                        <span class="language-label">
+                            <span class="flag">🇮🇶</span>
+                            <span>کوردی</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            {# Remember Me #}
+            <div class="form-group remember-me">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="remember_me" id="remember-me">
+                    <span class="checkmark"></span>
+                    <span class="label-text">
+                        <span class="label-en">Remember me</span>
+                        <span class="label-ar">تذكرني</span>
+                    </span>
+                </label>
+                <a href="/forgot-password" class="forgot-password">
+                    <span class="label-en">Forgot password?</span>
+                    <span class="label-ar">نسيت كلمة المرور؟</span>
+                </a>
+            </div>
+
+            {# Error Message Area #}
+            <div id="login-error" class="alert alert-danger" style="display: none;">
+                <i class="fa fa-exclamation-circle"></i>
+                <span id="error-message"></span>
+            </div>
+
+            {# Submit Button #}
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-login" id="login-btn">
+                    <span class="btn-text">
+                        <span class="label-en">Login</span>
+                        <span class="label-ar">تسجيل الدخول</span>
+                    </span>
+                    <span class="btn-loading" style="display: none;">
+                        <i class="fa fa-spinner fa-spin"></i>
+                    </span>
+                </button>
+            </div>
+        </form>
+
+        {# Footer #}
+        <div class="login-footer">
+            <p class="powered-by">
+                <span class="label-en">Powered by Al-Mofeed HIS</span>
+                <span class="label-ar">مدعوم من نظام المفيد</span>
+            </p>
+            <p class="version">v{{ app_version or "1.0.0" }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+/* 
+ * Mofeed Login Page Styles
+ * Color scheme follows UI guidelines from docs/ui-wireframes.md
+ */
+
+:root {
+    --mofeed-primary: #0C82E6;      /* Medical Blue */
+    --mofeed-secondary: #26C6DA;    /* Cyan */
+    --mofeed-accent: #4CAF50;       /* Green */
+    --mofeed-background: #F9FAFB;
+    --mofeed-text: #1F2937;
+    --mofeed-text-light: #6B7280;
+    --mofeed-border: #E5E7EB;
+    --mofeed-error: #EF4444;
+    --mofeed-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* RTL Support - applied when Arabic is selected */
+html[dir="rtl"] .mofeed-login-container,
+body.rtl .mofeed-login-container {
+    direction: rtl;
+    text-align: right;
+}
+
+html[dir="rtl"] .input-with-icon i:first-child,
+body.rtl .input-with-icon i:first-child {
+    left: auto;
+    right: 15px;
+}
+
+html[dir="rtl"] .input-with-icon input,
+body.rtl .input-with-icon input {
+    padding-left: 15px;
+    padding-right: 45px;
+}
+
+/* Main Container */
+.mofeed-login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--mofeed-primary) 0%, var(--mofeed-secondary) 100%);
+    padding: 20px;
+    font-family: 'Inter', 'Cairo', 'Noto Sans Arabic', sans-serif;
+}
+
+/* Login Card */
+.login-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--mofeed-shadow);
+    padding: 40px;
+    width: 100%;
+    max-width: 420px;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header */
+.login-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.logo-container {
+    margin-bottom: 16px;
+}
+
+.login-logo {
+    max-width: 120px;
+    max-height: 80px;
+    object-fit: contain;
+}
+
+.logo-placeholder {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    background: var(--mofeed-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-placeholder i {
+    font-size: 36px;
+    color: white;
+}
+
+.login-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--mofeed-text);
+    margin: 0 0 8px 0;
+    font-family: 'Cairo', 'Noto Sans Arabic', sans-serif;
+}
+
+.login-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--mofeed-text-light);
+    margin: 0;
+}
+
+/* Form Styles */
+.login-form {
+    margin-bottom: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--mofeed-text);
+}
+
+.label-ar {
+    margin-left: 8px;
+    color: var(--mofeed-text-light);
+}
+
+.label-ku {
+    margin-left: 8px;
+    color: var(--mofeed-text-light);
+}
+
+/* Input with Icon */
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon i:first-child {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--mofeed-text-light);
+}
+
+.input-with-icon input {
+    width: 100%;
+    padding: 14px 15px 14px 45px;
+    border: 1px solid var(--mofeed-border);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    background-color: var(--mofeed-background);
+}
+
+.input-with-icon input:focus {
+    outline: none;
+    border-color: var(--mofeed-primary);
+    box-shadow: 0 0 0 3px rgba(12, 130, 230, 0.1);
+    background-color: white;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--mofeed-text-light);
+    cursor: pointer;
+    padding: 5px;
+}
+
+.toggle-password:hover {
+    color: var(--mofeed-primary);
+}
+
+/* Language Selector */
+.language-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.language-option {
+    flex: 1;
+    min-width: 100px;
+    margin: 0;
+}
+
+.language-option input {
+    display: none;
+}
+
+.language-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 16px;
+    border: 2px solid var(--mofeed-border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.language-option input:checked + .language-label {
+    border-color: var(--mofeed-primary);
+    background-color: rgba(12, 130, 230, 0.05);
+    color: var(--mofeed-primary);
+}
+
+.language-label:hover {
+    border-color: var(--mofeed-primary);
+}
+
+.flag {
+    font-size: 18px;
+}
+
+/* Remember Me & Forgot Password */
+.remember-me {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.checkbox-label input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--mofeed-primary);
+}
+
+.forgot-password {
+    color: var(--mofeed-primary);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Error Message */
+.alert-danger {
+    background-color: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: var(--mofeed-error);
+    padding: 12px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Login Button */
+.btn-login {
+    width: 100%;
+    padding: 16px 24px;
+    background: var(--mofeed-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-login:hover {
+    background: #0A6FC2;
+    transform: translateY(-1px);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+.btn-login:disabled {
+    background: var(--mofeed-text-light);
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Footer */
+.login-footer {
+    text-align: center;
+    color: var(--mofeed-text-light);
+    font-size: 12px;
+}
+
+.login-footer p {
+    margin: 4px 0;
+}
+
+.version {
+    opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 24px;
+    }
+    
+    .login-title {
+        font-size: 20px;
+    }
+    
+    .language-options {
+        flex-direction: column;
+    }
+    
+    .language-option {
+        min-width: 100%;
+    }
+}
+</style>
+{% endblock %}
+
+{% block script %}
+<script>
+/**
+ * Mofeed Login Page JavaScript
+ * 
+ * Handles:
+ * 1. Form submission with AJAX
+ * 2. Language switching with session storage
+ * 3. Password visibility toggle
+ * 4. Form validation and error handling
+ * 
+ * Integration with Frappe:
+ * - Uses frappe.call() for authentication
+ * - Integrates with frappe.session
+ * - Follows Frappe's login flow
+ */
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    initializeLanguage();
+    setupLanguageListeners();
+    focusUsernameField();
+});
+
+/**
+ * Initialize language based on browser or stored preference
+ */
+function initializeLanguage() {
+    var storedLang = localStorage.getItem('mofeed_language');
+    if (storedLang) {
+        var radioBtn = document.querySelector('input[name="language"][value="' + storedLang + '"]');
+        if (radioBtn) {
+            radioBtn.checked = true;
+        }
+        applyLanguage(storedLang);
+    }
+}
+
+/**
+ * Setup language radio button listeners
+ */
+function setupLanguageListeners() {
+    var languageRadios = document.querySelectorAll('input[name="language"]');
+    languageRadios.forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            applyLanguage(this.value);
+            localStorage.setItem('mofeed_language', this.value);
+        });
+    });
+}
+
+/**
+ * Apply selected language (RTL for Arabic/Kurdish)
+ */
+function applyLanguage(lang) {
+    if (lang === 'ar' || lang === 'ckb') {
+        document.body.classList.add('rtl');
+        document.documentElement.setAttribute('dir', 'rtl');
+    } else {
+        document.body.classList.remove('rtl');
+        document.documentElement.setAttribute('dir', 'ltr');
+    }
+}
+
+/**
+ * Focus on username field for quick login
+ */
+function focusUsernameField() {
+    var usernameField = document.getElementById('login-username');
+    if (usernameField) {
+        usernameField.focus();
+    }
+}
+
+/**
+ * Toggle password visibility
+ */
+function togglePasswordVisibility() {
+    var passwordField = document.getElementById('login-password');
+    var toggleIcon = document.getElementById('password-toggle-icon');
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    }
+}
+
+/**
+ * Handle login form submission
+ */
+function mofeedLogin(event) {
+    event.preventDefault();
+    
+    var username = document.getElementById('login-username').value;
+    var password = document.getElementById('login-password').value;
+    var language = document.querySelector('input[name="language"]:checked').value;
+    var rememberMe = document.getElementById('remember-me').checked;
+    
+    // Hide any previous errors
+    hideError();
+    
+    // Show loading state
+    setLoadingState(true);
+    
+    // Make login request using Frappe's API
+    frappe.call({
+        method: 'login',
+        args: {
+            usr: username,
+            pwd: password
+        },
+        callback: function(response) {
+            // Login successful
+            // Set language preference
+            setUserLanguage(language, function() {
+                // Redirect to desk or configured home page
+                window.location.href = '/desk';
+            });
+        },
+        error: function(response) {
+            // Login failed
+            setLoadingState(false);
+            
+            var message = 'Invalid username or password';
+            if (response && response.message) {
+                message = response.message;
+            }
+            showError(message);
+        },
+        always: function() {
+            setLoadingState(false);
+        }
+    });
+    
+    return false;
+}
+
+/**
+ * Set user's language preference after login
+ */
+function setUserLanguage(language, callback) {
+    frappe.call({
+        method: 'frappe.client.set_value',
+        args: {
+            doctype: 'User',
+            name: frappe.session.user,
+            fieldname: 'language',
+            value: language
+        },
+        callback: callback,
+        error: callback  // Continue even if language setting fails
+    });
+}
+
+/**
+ * Show/hide loading state
+ */
+function setLoadingState(loading) {
+    var btn = document.getElementById('login-btn');
+    var btnText = btn.querySelector('.btn-text');
+    var btnLoading = btn.querySelector('.btn-loading');
+    
+    if (loading) {
+        btn.disabled = true;
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline';
+    } else {
+        btn.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoading.style.display = 'none';
+    }
+}
+
+/**
+ * Show error message
+ */
+function showError(message) {
+    var errorDiv = document.getElementById('login-error');
+    var errorMessage = document.getElementById('error-message');
+    
+    errorMessage.textContent = message;
+    errorDiv.style.display = 'flex';
+    
+    // Shake animation
+    errorDiv.classList.add('shake');
+    setTimeout(function() {
+        errorDiv.classList.remove('shake');
+    }, 500);
+}
+
+/**
+ * Hide error message
+ */
+function hideError() {
+    var errorDiv = document.getElementById('login-error');
+    errorDiv.style.display = 'none';
+}
+
+// Add shake animation
+var style = document.createElement('style');
+style.textContent = '@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }' +
+    '.shake { animation: shake 0.3s ease-in-out; }';
+document.head.appendChild(style);
+</script>
+{% endblock %}
