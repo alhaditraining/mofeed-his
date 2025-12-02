@@ -1,0 +1,169 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:hospital_name",
+ "creation": "2025-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "hospital_name",
+  "hospital_code",
+  "mrn_prefix",
+  "column_break_1",
+  "hospital_type",
+  "is_active",
+  "location_section",
+  "address_line_1",
+  "address_line_2",
+  "city",
+  "column_break_2",
+  "governorate",
+  "country",
+  "contact_section",
+  "phone",
+  "email",
+  "column_break_3",
+  "website"
+ ],
+ "fields": [
+  {
+   "fieldname": "hospital_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Hospital Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "hospital_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Hospital Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "mrn_prefix",
+   "fieldtype": "Data",
+   "description": "Prefix used for Medical Record Numbers (e.g., KRB for Karbala)",
+   "in_list_view": 1,
+   "label": "MRN Prefix",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "hospital_type",
+   "fieldtype": "Select",
+   "label": "Hospital Type",
+   "options": "\nGeneral Hospital\nSpecialized Hospital\nMedical Center\nClinic\nPolyclinic"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "location_section",
+   "fieldtype": "Section Break",
+   "label": "Location"
+  },
+  {
+   "fieldname": "address_line_1",
+   "fieldtype": "Data",
+   "label": "Address Line 1"
+  },
+  {
+   "fieldname": "address_line_2",
+   "fieldtype": "Data",
+   "label": "Address Line 2"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "governorate",
+   "fieldtype": "Data",
+   "description": "Iraqi Governorate (e.g., Baghdad, Karbala, Basra)",
+   "label": "Governorate"
+  },
+  {
+   "default": "Iraq",
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "contact_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Information"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "label": "Website"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Mofeed HIS",
+ "name": "Hospital",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Healthcare Administrator",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
