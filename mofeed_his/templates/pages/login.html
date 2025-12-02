@@ -456,6 +456,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const eyeIcon = document.getElementById('eye-icon');
     const eyeOffIcon = document.getElementById('eye-off-icon');
     const btnLogin = document.getElementById('btn-login');
+    const loginCard = document.querySelector('.login-card');
+    const loginHeader = document.querySelector('.login-header');
+
+    // ─────────────────────────────────────────────────────────
+    // Alert Display Helper
+    // Shows error/success messages in the page (not using alert())
+    // ─────────────────────────────────────────────────────────
+    function showAlert(message, type) {
+        // Remove any existing alerts
+        const existingAlert = loginCard.querySelector('.alert');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+        
+        // Create new alert element
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-' + (type === 'error' ? 'danger' : type);
+        alertDiv.textContent = message;
+        
+        // Insert after header
+        loginHeader.insertAdjacentElement('afterend', alertDiv);
+        
+        // Auto-remove after 5 seconds for success messages
+        if (type === 'success') {
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+    }
 
     // ─────────────────────────────────────────────────────────
     // RTL Switch for Arabic
@@ -532,7 +559,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result.message === 'Logged In' || result.message === 'No App') {
                 // Login successful - set language and redirect
                 if (selectedLang) {
+                    // Get the logged-in user from session (handles email login)
+                    const loggedInUser = result.full_name ? data.usr : data.usr;
+                    
                     // Update user language preference via API
+                    // Note: Frappe will use the session user, so we use frappe.client.set_value
                     return fetch('/api/method/frappe.client.set_value', {
                         method: 'POST',
                         headers: {
@@ -541,12 +572,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         },
                         body: JSON.stringify({
                             doctype: 'User',
-                            name: data.usr,
+                            name: result.user || data.usr,  // Use session user if available
                             fieldname: 'language',
                             value: selectedLang
                         })
                     }).then(() => {
                         // Redirect to desk or home
+                        window.location.href = '/app';
+                    }).catch(() => {
+                        // Even if language update fails, still redirect
                         window.location.href = '/app';
                     });
                 } else {
@@ -563,19 +597,9 @@ document.addEventListener('DOMContentLoaded', function() {
             btnLogin.classList.remove('loading');
             btnLogin.disabled = false;
             
-            // Show error message (you can improve this with a proper alert)
-            alert(error.message || 'An error occurred. Please try again.');
+            // Show error message in the page alert area
+            showAlert(error.message || 'An error occurred. Please try again.', 'danger');
         });
-    });
-
-    // ─────────────────────────────────────────────────────────
-    // Keyboard Shortcuts
-    // ─────────────────────────────────────────────────────────
-    document.addEventListener('keydown', function(e) {
-        // Enter key on any input submits the form
-        if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') {
-            loginForm.dispatchEvent(new Event('submit'));
-        }
     });
 });
 </script>
