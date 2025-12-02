@@ -1,0 +1,126 @@
+{#
+  Al-Mofeed HIS Custom Login Page
+  
+  Multi-language login page supporting Arabic (ar), English (en), and Kurdish (ku).
+  Follows the UI wireframe from docs/ui-wireframes.md and PDR requirements.
+  
+  This template overrides the default Frappe login page via website_route_rules in hooks.py.
+#}
+
+{% extends "templates/web.html" %}
+
+{% block title %}{{ _("Login") }} – {{ _("Al-Mofeed HIS") }}{% endblock %}
+
+{% block head_include %}
+<link rel="stylesheet" href="/assets/mofeed_his/css/mofeed_login.css">
+{% endblock %}
+
+{% block content %}
+<div id="mofeed-login-wrapper" class="mofeed-login-wrapper" dir="ltr">
+  <div class="mofeed-login-card">
+    <!-- Logo and Title -->
+    <div class="mofeed-login-header">
+      <div class="mofeed-logo-placeholder">
+        <!-- Logo placeholder - replace with actual logo image -->
+        <i class="fa fa-hospital-o mofeed-logo-icon"></i>
+      </div>
+      <h1 class="mofeed-title-ar">المفيد لإدارة المستشفيات</h1>
+      <h2 class="mofeed-title-en">Al-Mofeed Hospital Information System</h2>
+    </div>
+
+    <!-- Login Form -->
+    <form id="mofeed-login-form" class="mofeed-login-form" method="POST" action="/api/method/login">
+      <!-- Username Field -->
+      <div class="mofeed-form-group">
+        <label for="login_email" class="mofeed-label">
+          <span class="mofeed-label-en">Username</span>
+          <span class="mofeed-label-divider">/</span>
+          <span class="mofeed-label-ar">اسم المستخدم</span>
+        </label>
+        <input 
+          type="text" 
+          id="login_email" 
+          name="usr" 
+          class="mofeed-input" 
+          placeholder="{{ _('Enter your username') }}"
+          required
+          autocomplete="username"
+        >
+      </div>
+
+      <!-- Password Field -->
+      <div class="mofeed-form-group">
+        <label for="login_password" class="mofeed-label">
+          <span class="mofeed-label-en">Password</span>
+          <span class="mofeed-label-divider">/</span>
+          <span class="mofeed-label-ar">كلمة المرور</span>
+        </label>
+        <div class="mofeed-password-wrapper">
+          <input 
+            type="password" 
+            id="login_password" 
+            name="pwd" 
+            class="mofeed-input mofeed-password-input" 
+            placeholder="{{ _('Enter your password') }}"
+            required
+            autocomplete="current-password"
+          >
+          <button type="button" id="toggle-password" class="mofeed-password-toggle" aria-label="{{ _('Toggle password visibility') }}">
+            <i class="fa fa-eye" id="toggle-password-icon"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Language Selector -->
+      <div class="mofeed-form-group">
+        <label for="language_select" class="mofeed-label">
+          <span class="mofeed-label-en">Language</span>
+          <span class="mofeed-label-divider">/</span>
+          <span class="mofeed-label-ar">اللغة</span>
+          <span class="mofeed-label-divider">/</span>
+          <span class="mofeed-label-ku">زمان</span>
+        </label>
+        <select id="language_select" name="language" class="mofeed-select">
+          <option value="ar" {% if frappe.local.lang == 'ar' %}selected{% endif %}>العربية (Arabic)</option>
+          <option value="en" {% if frappe.local.lang == 'en' or not frappe.local.lang %}selected{% endif %}>English</option>
+          <option value="ku">کوردی (Kurdish)</option>
+        </select>
+      </div>
+
+      <!-- Remember Me and Forgot Password -->
+      <div class="mofeed-form-group mofeed-remember-row">
+        <label class="mofeed-checkbox-label">
+          <input type="checkbox" id="remember_me" name="remember_me" class="mofeed-checkbox">
+          <span class="mofeed-checkbox-text">
+            <span class="mofeed-label-ar">تذكرني</span>
+            <span class="mofeed-label-divider">|</span>
+            <span class="mofeed-label-en">Remember me</span>
+          </span>
+        </label>
+        <a href="/forgot" class="mofeed-forgot-link">{{ _("Forgot?") }}</a>
+      </div>
+
+      <!-- Login Button -->
+      <div class="mofeed-form-group">
+        <button type="submit" id="mofeed-login-btn" class="mofeed-login-btn">
+          <span class="mofeed-btn-text-en">Login</span>
+          <span class="mofeed-btn-divider">–</span>
+          <span class="mofeed-btn-text-ar">تسجيل الدخول</span>
+        </button>
+      </div>
+
+      <!-- Error Message Container -->
+      <div id="login-error" class="mofeed-error-message" style="display: none;"></div>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <div class="mofeed-login-footer">
+    <p class="mofeed-copyright">
+      © {{ frappe.utils.now_datetime().year }} Al-Mofeed HIS
+    </p>
+  </div>
+</div>
+
+<script src="/assets/mofeed_his/js/mofeed_login.js"></script>
+{% endblock %}

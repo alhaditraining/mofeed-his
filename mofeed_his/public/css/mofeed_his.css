@@ -1,0 +1,20 @@
+/**
+ * Al-Mofeed HIS - Main Desk Styles
+ * 
+ * Healthcare-themed styles for the Frappe Desk interface.
+ * Uses the color scheme from docs/ui-wireframes.md:
+ * - Primary: #0C82E6 (Medical Blue)
+ * - Secondary: #26C6DA (Cyan)
+ * - Accent: #4CAF50 (Green)
+ */
+
+:root {
+  --mofeed-primary: #0C82E6;
+  --mofeed-secondary: #26C6DA;
+  --mofeed-accent: #4CAF50;
+}
+
+/* Module icon styling */
+.module-icon[data-module="Mofeed HIS"] {
+  background-color: var(--mofeed-primary) !important;
+}

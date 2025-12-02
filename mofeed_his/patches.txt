@@ -1,0 +1,2 @@
+# Mofeed HIS patches
+# Add patches as: mofeed_his.patches.patch_module.patch_name

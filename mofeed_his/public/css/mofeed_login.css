@@ -1,0 +1,413 @@
+/**
+ * Al-Mofeed HIS - Custom Login Page Styles
+ * 
+ * Healthcare-themed login page with RTL support for Arabic.
+ * Colors follow the UI guidelines from docs/ui-wireframes.md:
+ * - Primary: #0C82E6 (Medical Blue)
+ * - Secondary: #26C6DA (Cyan)
+ * - Accent: #4CAF50 (Green)
+ * - Background: #F9FAFB
+ * - Text: #1F2937
+ * 
+ * Fonts:
+ * - Arabic: Cairo, Noto Sans Arabic
+ * - English: Inter, Roboto
+ */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* CSS Variables for theming */
+:root {
+  --mofeed-primary: #0C82E6;
+  --mofeed-primary-dark: #0a6dc4;
+  --mofeed-primary-light: #e8f4fd;
+  --mofeed-secondary: #26C6DA;
+  --mofeed-accent: #4CAF50;
+  --mofeed-background: #F9FAFB;
+  --mofeed-text: #1F2937;
+  --mofeed-text-light: #6B7280;
+  --mofeed-white: #FFFFFF;
+  --mofeed-border: #E5E7EB;
+  --mofeed-error: #EF4444;
+  --mofeed-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --mofeed-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* Font families */
+  --font-arabic: 'Cairo', 'Noto Sans Arabic', sans-serif;
+  --font-english: 'Inter', 'Roboto', sans-serif;
+}
+
+/* Reset and base styles */
+.mofeed-login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--mofeed-primary-light) 0%, var(--mofeed-background) 100%);
+  padding: 1rem;
+  font-family: var(--font-english);
+}
+
+/* RTL support - applied when Arabic is selected */
+.mofeed-login-wrapper[dir="rtl"] {
+  font-family: var(--font-arabic);
+}
+
+.mofeed-login-wrapper[dir="rtl"] .mofeed-label-en,
+.mofeed-login-wrapper[dir="rtl"] .mofeed-btn-text-en {
+  font-family: var(--font-english);
+}
+
+/* Login Card */
+.mofeed-login-card {
+  background: var(--mofeed-white);
+  border-radius: 16px;
+  box-shadow: var(--mofeed-shadow-lg);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 1rem;
+}
+
+/* Header Section */
+.mofeed-login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.mofeed-logo-placeholder {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(135deg, var(--mofeed-primary) 0%, var(--mofeed-secondary) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mofeed-logo-icon {
+  font-size: 2.5rem;
+  color: var(--mofeed-white);
+}
+
+.mofeed-title-ar {
+  font-family: var(--font-arabic);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--mofeed-text);
+  margin: 0 0 0.25rem 0;
+  direction: rtl;
+}
+
+.mofeed-title-en {
+  font-family: var(--font-english);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--mofeed-text-light);
+  margin: 0;
+}
+
+/* Form Styles */
+.mofeed-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.mofeed-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mofeed-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--mofeed-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mofeed-label-ar {
+  font-family: var(--font-arabic);
+  direction: rtl;
+}
+
+.mofeed-label-en {
+  font-family: var(--font-english);
+}
+
+.mofeed-label-ku {
+  font-family: var(--font-arabic);
+  direction: rtl;
+}
+
+.mofeed-label-divider {
+  color: var(--mofeed-text-light);
+}
+
+/* Input Styles */
+.mofeed-input,
+.mofeed-select {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--mofeed-border);
+  border-radius: 8px;
+  background: var(--mofeed-white);
+  color: var(--mofeed-text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+}
+
+.mofeed-input:focus,
+.mofeed-select:focus {
+  outline: none;
+  border-color: var(--mofeed-primary);
+  box-shadow: 0 0 0 3px rgba(12, 130, 230, 0.15);
+}
+
+.mofeed-input::placeholder {
+  color: var(--mofeed-text-light);
+}
+
+/* RTL input styling */
+.mofeed-login-wrapper[dir="rtl"] .mofeed-input,
+.mofeed-login-wrapper[dir="rtl"] .mofeed-select {
+  text-align: right;
+  font-family: var(--font-arabic);
+}
+
+/* Password Field */
+.mofeed-password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mofeed-password-input {
+  padding-right: 3rem;
+}
+
+.mofeed-login-wrapper[dir="rtl"] .mofeed-password-input {
+  padding-right: 1rem;
+  padding-left: 3rem;
+}
+
+.mofeed-password-toggle {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--mofeed-text-light);
+  transition: color 0.2s ease;
+}
+
+.mofeed-login-wrapper[dir="rtl"] .mofeed-password-toggle {
+  right: auto;
+  left: 0.75rem;
+}
+
+.mofeed-password-toggle:hover {
+  color: var(--mofeed-primary);
+}
+
+/* Select Dropdown */
+.mofeed-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.mofeed-login-wrapper[dir="rtl"] .mofeed-select {
+  background-position: left 1rem center;
+  padding-right: 1rem;
+  padding-left: 2.5rem;
+}
+
+/* Remember Me Row */
+.mofeed-remember-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mofeed-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.mofeed-checkbox {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: var(--mofeed-primary);
+  cursor: pointer;
+}
+
+.mofeed-checkbox-text {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--mofeed-text);
+}
+
+.mofeed-forgot-link {
+  font-size: 0.875rem;
+  color: var(--mofeed-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.mofeed-forgot-link:hover {
+  color: var(--mofeed-primary-dark);
+  text-decoration: underline;
+}
+
+/* Login Button */
+.mofeed-login-btn {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--mofeed-white);
+  background: linear-gradient(135deg, var(--mofeed-primary) 0%, var(--mofeed-primary-dark) 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.mofeed-login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(12, 130, 230, 0.4);
+}
+
+.mofeed-login-btn:active {
+  transform: translateY(0);
+}
+
+.mofeed-login-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.mofeed-btn-text-ar {
+  font-family: var(--font-arabic);
+}
+
+.mofeed-btn-text-en {
+  font-family: var(--font-english);
+}
+
+.mofeed-btn-divider {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Error Message */
+.mofeed-error-message {
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--mofeed-error);
+  border-radius: 8px;
+  color: var(--mofeed-error);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+/* Footer */
+.mofeed-login-footer {
+  text-align: center;
+}
+
+.mofeed-copyright {
+  font-size: 0.75rem;
+  color: var(--mofeed-text-light);
+  margin: 0;
+}
+
+/* Loading State */
+.mofeed-login-btn.loading {
+  position: relative;
+  color: transparent;
+}
+
+.mofeed-login-btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--mofeed-white);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .mofeed-login-card {
+    padding: 1.5rem;
+  }
+  
+  .mofeed-title-ar {
+    font-size: 1.25rem;
+  }
+  
+  .mofeed-title-en {
+    font-size: 0.875rem;
+  }
+  
+  .mofeed-login-btn {
+    font-size: 1rem;
+  }
+}
+
+/* High contrast mode for accessibility */
+@media (prefers-contrast: high) {
+  .mofeed-input,
+  .mofeed-select {
+    border-width: 3px;
+  }
+  
+  .mofeed-login-btn {
+    font-weight: 700;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .mofeed-login-btn,
+  .mofeed-input,
+  .mofeed-select,
+  .mofeed-password-toggle,
+  .mofeed-forgot-link {
+    transition: none;
+  }
+  
+  .mofeed-login-btn.loading::after {
+    animation: none;
+  }
+}

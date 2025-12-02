@@ -1,0 +1,17 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include mofeed_his *.css
+recursive-include mofeed_his *.html
+recursive-include mofeed_his *.ico
+recursive-include mofeed_his *.js
+recursive-include mofeed_his *.json
+recursive-include mofeed_his *.md
+recursive-include mofeed_his *.png
+recursive-include mofeed_his *.py
+recursive-include mofeed_his *.svg
+recursive-include mofeed_his *.txt
+recursive-exclude mofeed_his *.pyc

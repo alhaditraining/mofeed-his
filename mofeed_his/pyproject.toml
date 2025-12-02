@@ -1,0 +1,33 @@
+[project]
+name = "mofeed_his"
+version = "0.0.1"
+description = "Hospital Information System for clinics, medical centers, and hospitals in Iraq. Built on ERPNext + Healthcare."
+authors = [
+    { name = "Al-Mofeed HIS Team", email = "info@mofeed-his.com" }
+]
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "frappe",
+    "erpnext",
+]
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mofeed_his*"]
+
+[tool.setuptools.package-data]
+"*" = [
+    "*.json",
+    "*.html",
+    "*.css",
+    "*.js",
+    "*.py",
+    "*.txt",
+    "*.md",
+]

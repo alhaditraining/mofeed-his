@@ -1,0 +1,4 @@
+# Requirements for mofeed_his
+# These are typically handled by Frappe bench, but listed here for reference
+frappe
+erpnext
