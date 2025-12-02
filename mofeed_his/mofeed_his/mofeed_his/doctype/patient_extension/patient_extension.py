@@ -50,8 +50,10 @@ class PatientExtension(Document):
 		"""
 		Generate a Medical Record Number with facility prefix.
 		Format: YYYY-PREFIX-NNNNN (e.g., 2025-KRB-00001)
+		Uses database MAX to avoid race conditions.
 		"""
 		import datetime
+		import re
 
 		year = datetime.datetime.now().year
 
@@ -62,13 +64,22 @@ class PatientExtension(Document):
 			if hospital.mrn_prefix:
 				prefix = hospital.mrn_prefix
 
-		# Get the next sequence number for this hospital and year
-		filters = {
-			"hospital": self.hospital,
-			"mrn": ["like", f"{year}-{prefix}-%"]
-		}
+		# Pattern for this hospital and year
+		mrn_pattern = f"{year}-{prefix}-%"
 
-		existing_count = frappe.db.count("Patient Extension", filters)
-		next_number = existing_count + 1
+		# Get the maximum MRN number for this hospital and year using SQL
+		# This is more reliable than counting for concurrent insertions
+		result = frappe.db.sql("""
+			SELECT MAX(mrn) as max_mrn
+			FROM `tabPatient Extension`
+			WHERE hospital = %s AND mrn LIKE %s
+		""", (self.hospital, mrn_pattern), as_dict=True)
+
+		next_number = 1
+		if result and result[0].max_mrn:
+			# Extract the number from the MRN (e.g., "2025-KRB-00005" -> 5)
+			match = re.search(r'-(\d+)$', result[0].max_mrn)
+			if match:
+				next_number = int(match.group(1)) + 1
 
 		return f"{year}-{prefix}-{next_number:05d}"

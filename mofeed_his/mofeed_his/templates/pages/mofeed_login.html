@@ -136,7 +136,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		const username = document.getElementById('login-username').value;
 		const password = document.getElementById('login-password').value;
 		const language = languageSelect.value;
-		const remember = document.getElementById('remember-me').checked;
 
 		// Show loading state
 		loginBtn.disabled = true;
@@ -154,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			},
 			callback: function(r) {
 				if (r.message === 'Logged In') {
-					// Set language preference
+					// Set language preference asynchronously, then redirect
 					if (language) {
 						frappe.call({
 							method: 'frappe.client.set_value',
@@ -164,11 +163,18 @@ document.addEventListener('DOMContentLoaded', function() {
 								fieldname: 'language',
 								value: language
 							},
-							async: false
+							callback: function() {
+								window.location.href = '/app';
+							},
+							error: function() {
+								// Redirect even if language setting fails
+								window.location.href = '/app';
+							}
 						});
+					} else {
+						// Redirect to desk
+						window.location.href = '/app';
 					}
-					// Redirect to desk
-					window.location.href = '/app';
 				}
 			},
 			error: function(r) {

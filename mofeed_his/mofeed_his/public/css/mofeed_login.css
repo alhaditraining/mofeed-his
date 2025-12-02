@@ -18,12 +18,15 @@
 	--mofeed-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-/* Fonts */
+/* 
+ * Fonts - Using Google Fonts with system font fallbacks for offline support
+ * For production, consider self-hosting these fonts for better performance
+ */
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 /* Base Styles */
 body {
-	font-family: 'Inter', 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 	background: linear-gradient(135deg, var(--mofeed-background) 0%, #E0F2FE 100%);
 	min-height: 100vh;
 	margin: 0;
@@ -31,7 +34,7 @@ body {
 }
 
 [dir="rtl"] body {
-	font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	font-family: 'Cairo', 'Noto Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
 }
 
 /* Login Container */
