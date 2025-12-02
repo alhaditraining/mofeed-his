@@ -188,11 +188,6 @@ def generate_patient_mrn(doc, method=None):
     # Set MRN on patient document
     doc.custom_mrn = mrn
 
-    frappe.log_error(
-        title="MRN Generated",
-        message=f"Generated MRN {mrn} for patient {doc.patient_name}",
-    )
-
 
 def validate_mrn_unique(doc, method=None):
     """Validate that MRN is unique across all patients.
