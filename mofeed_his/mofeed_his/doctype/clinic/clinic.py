@@ -29,7 +29,7 @@ Key Methods:
 
 import frappe
 from frappe.model.document import Document
-from frappe.utils import nowdate, getdate, get_time, time_diff_in_seconds, add_to_date
+from frappe.utils import nowdate, getdate, get_time
 
 
 class Clinic(Document):
@@ -117,11 +117,13 @@ class Clinic(Document):
         
         # Generate all possible slots
         slots = []
+        from datetime import datetime, timedelta
+        
         current_time = get_time(working_day.get("start_time", "08:00"))
         end_time = get_time(working_day.get("end_time", "16:00"))
         slot_duration = self.appointment_duration or 15
         
-        while time_diff_in_seconds(str(end_time), str(current_time)) > 0:
+        while current_time < end_time:
             slot_time = current_time.strftime("%H:%M")
             is_available = slot_time not in booked_times
             
@@ -131,12 +133,9 @@ class Clinic(Document):
                 "doctor": doctor
             })
             
-            # Move to next slot
-            current_time = add_to_date(
-                f"2000-01-01 {current_time}",
-                minutes=slot_duration,
-                as_datetime=True
-            ).time()
+            # Move to next slot using timedelta for cleaner time arithmetic
+            current_dt = datetime.combine(datetime.today(), current_time)
+            current_time = (current_dt + timedelta(minutes=slot_duration)).time()
         
         return slots
 

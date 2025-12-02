@@ -87,10 +87,10 @@ class Hospital(Document):
         current_year = nowdate()[:4]
         prefix = f"{current_year}-{self.mrn_prefix}"
         
-        # Get the last MRN with this prefix
+        # Get the last MRN with this prefix from Patient Extension
         last_mrn = frappe.db.sql("""
             SELECT MAX(CAST(SUBSTRING_INDEX(mofeed_mrn, '-', -1) AS UNSIGNED)) as last_num
-            FROM `tabPatient`
+            FROM `tabPatient Extension`
             WHERE mofeed_mrn LIKE %s
         """, (f"{prefix}-%",), as_dict=True)
         

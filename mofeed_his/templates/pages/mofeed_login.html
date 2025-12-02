@@ -41,8 +41,8 @@ with a clean medical-themed design.
 
         {# Login Form #}
         <form id="mofeed-login-form" class="login-form" onsubmit="return mofeedLogin(event)">
-            {# CSRF Token #}
-            <input type="hidden" name="csrf_token" value="{{ frappe.session.csrf_token }}">
+            {# CSRF Token - using context variable for consistency #}
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
             
             {# Username Field #}
             <div class="form-group">
@@ -627,20 +627,24 @@ function mofeedLogin(event) {
     // Show loading state
     setLoadingState(true);
     
-    // Make login request using Frappe's API
+    // Make login request using custom login_with_language method
     frappe.call({
-        method: 'login',
+        method: 'mofeed_his.www.mofeed_login.login_with_language',
         args: {
             usr: username,
-            pwd: password
+            pwd: password,
+            language: language
         },
-        callback: function(response) {
-            // Login successful
-            // Set language preference
-            setUserLanguage(language, function() {
-                // Redirect to desk or configured home page
-                window.location.href = '/desk';
-            });
+        callback: function(r) {
+            if (r.message && r.message.success) {
+                // Login successful - redirect to appropriate page
+                window.location.href = r.message.redirect || '/desk';
+            } else {
+                // Login failed
+                setLoadingState(false);
+                var message = (r.message && r.message.message) || 'Invalid username or password';
+                showError(message);
+            }
         },
         error: function(response) {
             // Login failed
@@ -658,23 +662,6 @@ function mofeedLogin(event) {
     });
     
     return false;
-}
-
-/**
- * Set user's language preference after login
- */
-function setUserLanguage(language, callback) {
-    frappe.call({
-        method: 'frappe.client.set_value',
-        args: {
-            doctype: 'User',
-            name: frappe.session.user,
-            fieldname: 'language',
-            value: language
-        },
-        callback: callback,
-        error: callback  // Continue even if language setting fails
-    });
 }
 
 /**
