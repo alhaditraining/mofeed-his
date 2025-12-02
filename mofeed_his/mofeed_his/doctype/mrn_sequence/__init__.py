@@ -1,0 +1,1 @@
+"""MRN Sequence doctype package."""
