@@ -1,0 +1,292 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "field:mrn",
+ "creation": "2025-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "patient_link",
+  "mrn",
+  "hospital",
+  "column_break_1",
+  "registration_date",
+  "is_active",
+  "iraqi_identity_section",
+  "national_id",
+  "national_id_type",
+  "nationality",
+  "column_break_2",
+  "mother_name",
+  "tribe",
+  "contact_section",
+  "primary_phone",
+  "secondary_phone",
+  "column_break_3",
+  "emergency_contact_name",
+  "emergency_contact_phone",
+  "emergency_contact_relation",
+  "address_section",
+  "governorate",
+  "district",
+  "neighborhood",
+  "column_break_4",
+  "full_address",
+  "insurance_section",
+  "has_insurance",
+  "insurance_company",
+  "insurance_plan",
+  "column_break_5",
+  "insurance_id",
+  "insurance_expiry",
+  "coverage_percentage"
+ ],
+ "fields": [
+  {
+   "fieldname": "patient_link",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Patient",
+   "options": "Patient",
+   "reqd": 1,
+   "unique": 1,
+   "description": "Link to the standard Healthcare Patient record"
+  },
+  {
+   "fieldname": "mrn",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Medical Record Number (MRN)",
+   "read_only": 1,
+   "reqd": 1,
+   "unique": 1,
+   "description": "Auto-generated with facility prefix (e.g., 2025-KRB-00001)"
+  },
+  {
+   "fieldname": "hospital",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Hospital",
+   "options": "Hospital",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "registration_date",
+   "fieldtype": "Date",
+   "label": "Registration Date",
+   "default": "Today"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "iraqi_identity_section",
+   "fieldtype": "Section Break",
+   "label": "Iraqi Identity Information"
+  },
+  {
+   "fieldname": "national_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "National ID",
+   "description": "Iraqi National ID Card number"
+  },
+  {
+   "fieldname": "national_id_type",
+   "fieldtype": "Select",
+   "label": "National ID Type",
+   "options": "\nUnified National Card\nCivil Status ID\nNationality Certificate\nPassport\nResidence Card"
+  },
+  {
+   "default": "Iraqi",
+   "fieldname": "nationality",
+   "fieldtype": "Data",
+   "label": "Nationality"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mother_name",
+   "fieldtype": "Data",
+   "label": "Mother's Name",
+   "description": "Required for Iraqi identity verification"
+  },
+  {
+   "fieldname": "tribe",
+   "fieldtype": "Data",
+   "label": "Tribe",
+   "description": "Optional tribal affiliation"
+  },
+  {
+   "fieldname": "contact_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Information"
+  },
+  {
+   "fieldname": "primary_phone",
+   "fieldtype": "Data",
+   "label": "Primary Phone",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "secondary_phone",
+   "fieldtype": "Data",
+   "label": "Secondary Phone",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "emergency_contact_name",
+   "fieldtype": "Data",
+   "label": "Emergency Contact Name"
+  },
+  {
+   "fieldname": "emergency_contact_phone",
+   "fieldtype": "Data",
+   "label": "Emergency Contact Phone",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "emergency_contact_relation",
+   "fieldtype": "Select",
+   "label": "Emergency Contact Relation",
+   "options": "\nSpouse\nParent\nChild\nSibling\nRelative\nFriend\nOther"
+  },
+  {
+   "fieldname": "address_section",
+   "fieldtype": "Section Break",
+   "label": "Address"
+  },
+  {
+   "fieldname": "governorate",
+   "fieldtype": "Select",
+   "label": "Governorate",
+   "options": "\nBaghdad\nBasra\nMaysan\nDhi Qar\nMuthanna\nQadisiyyah\nBabylon\nKarbala\nNajaf\nWasit\nDiyala\nSaladin\nKirkuk\nSulaymaniyah\nErbil\nDuhok\nNinawa\nAnbar"
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Data",
+   "label": "District"
+  },
+  {
+   "fieldname": "neighborhood",
+   "fieldtype": "Data",
+   "label": "Neighborhood"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "full_address",
+   "fieldtype": "Small Text",
+   "label": "Full Address"
+  },
+  {
+   "fieldname": "insurance_section",
+   "fieldtype": "Section Break",
+   "label": "Insurance Information"
+  },
+  {
+   "default": "0",
+   "fieldname": "has_insurance",
+   "fieldtype": "Check",
+   "label": "Has Insurance"
+  },
+  {
+   "fieldname": "insurance_company",
+   "fieldtype": "Data",
+   "label": "Insurance Company",
+   "depends_on": "has_insurance"
+  },
+  {
+   "fieldname": "insurance_plan",
+   "fieldtype": "Data",
+   "label": "Insurance Plan",
+   "depends_on": "has_insurance"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "insurance_id",
+   "fieldtype": "Data",
+   "label": "Insurance ID",
+   "depends_on": "has_insurance"
+  },
+  {
+   "fieldname": "insurance_expiry",
+   "fieldtype": "Date",
+   "label": "Insurance Expiry",
+   "depends_on": "has_insurance"
+  },
+  {
+   "fieldname": "coverage_percentage",
+   "fieldtype": "Percent",
+   "label": "Coverage Percentage",
+   "depends_on": "has_insurance"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Mofeed HIS",
+ "name": "Patient Extension",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Healthcare Administrator",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Physician",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Nursing User",
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,16 @@
+[project]
+name = "mofeed_his"
+version = "0.0.1"
+description = "Al-Mofeed Hospital Information System - Custom Frappe App for Iraqi Healthcare"
+authors = [
+    { name = "Al-Mofeed Team" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "frappe"
+]
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
