@@ -1,0 +1,383 @@
+/**
+ * Al-Mofeed HIS - Custom Login Page Styles
+ * Healthcare-themed clean UI with RTL support
+ */
+
+/* Color Scheme (Healthcare Clean) */
+:root {
+	--mofeed-primary: #0C82E6;
+	--mofeed-secondary: #26C6DA;
+	--mofeed-accent: #4CAF50;
+	--mofeed-background: #F9FAFB;
+	--mofeed-text: #1F2937;
+	--mofeed-text-light: #6B7280;
+	--mofeed-white: #FFFFFF;
+	--mofeed-border: #E5E7EB;
+	--mofeed-error: #EF4444;
+	--mofeed-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	--mofeed-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* 
+ * Fonts - Using Google Fonts with system font fallbacks for offline support
+ * For production, consider self-hosting these fonts for better performance
+ */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* Base Styles */
+body {
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	background: linear-gradient(135deg, var(--mofeed-background) 0%, #E0F2FE 100%);
+	min-height: 100vh;
+	margin: 0;
+	padding: 0;
+}
+
+[dir="rtl"] body {
+	font-family: 'Cairo', 'Noto Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Login Container */
+.mofeed-login-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	padding: 2rem;
+}
+
+/* Login Card */
+.mofeed-login-card {
+	background: var(--mofeed-white);
+	border-radius: 16px;
+	box-shadow: var(--mofeed-shadow-lg);
+	padding: 3rem;
+	width: 100%;
+	max-width: 440px;
+	text-align: center;
+}
+
+/* Logo Section */
+.mofeed-login-logo {
+	margin-bottom: 2rem;
+}
+
+.logo-icon {
+	margin-bottom: 1rem;
+}
+
+.logo-icon svg {
+	width: 80px;
+	height: 80px;
+}
+
+.mofeed-title-ar {
+	font-family: 'Cairo', sans-serif;
+	font-size: 1.75rem;
+	font-weight: 700;
+	color: var(--mofeed-primary);
+	margin: 0 0 0.25rem 0;
+	direction: rtl;
+}
+
+.mofeed-title-en {
+	font-family: 'Inter', sans-serif;
+	font-size: 1rem;
+	font-weight: 500;
+	color: var(--mofeed-text-light);
+	margin: 0;
+}
+
+/* Form Styles */
+.mofeed-login-form {
+	text-align: left;
+}
+
+[dir="rtl"] .mofeed-login-form {
+	text-align: right;
+}
+
+.form-group {
+	margin-bottom: 1.25rem;
+}
+
+.form-group label {
+	display: block;
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--mofeed-text);
+	margin-bottom: 0.5rem;
+}
+
+.label-en,
+.label-ar,
+.label-ku {
+	display: inline;
+}
+
+.label-ar {
+	margin-left: 0.5rem;
+	color: var(--mofeed-text-light);
+}
+
+[dir="rtl"] .label-ar {
+	margin-left: 0;
+	margin-right: 0.5rem;
+	color: var(--mofeed-text);
+}
+
+[dir="rtl"] .label-en {
+	color: var(--mofeed-text-light);
+}
+
+.label-ku {
+	display: none;
+	margin-left: 0.5rem;
+	color: var(--mofeed-text-light);
+}
+
+/* Input Styles */
+.mofeed-input,
+.mofeed-select {
+	width: 100%;
+	padding: 0.875rem 1rem;
+	font-size: 1rem;
+	border: 2px solid var(--mofeed-border);
+	border-radius: 10px;
+	background: var(--mofeed-white);
+	color: var(--mofeed-text);
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	box-sizing: border-box;
+}
+
+.mofeed-input:focus,
+.mofeed-select:focus {
+	outline: none;
+	border-color: var(--mofeed-primary);
+	box-shadow: 0 0 0 3px rgba(12, 130, 230, 0.15);
+}
+
+.mofeed-input::placeholder {
+	color: var(--mofeed-text-light);
+}
+
+/* Password Input Wrapper */
+.password-input-wrapper {
+	position: relative;
+}
+
+.password-input-wrapper .mofeed-input {
+	padding-right: 3rem;
+}
+
+[dir="rtl"] .password-input-wrapper .mofeed-input {
+	padding-right: 1rem;
+	padding-left: 3rem;
+}
+
+.toggle-password {
+	position: absolute;
+	right: 0.75rem;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0.25rem;
+	color: var(--mofeed-text-light);
+	transition: color 0.2s ease;
+}
+
+[dir="rtl"] .toggle-password {
+	right: auto;
+	left: 0.75rem;
+}
+
+.toggle-password:hover {
+	color: var(--mofeed-primary);
+}
+
+.toggle-password.showing {
+	color: var(--mofeed-primary);
+}
+
+/* Select Styles */
+.mofeed-select {
+	appearance: none;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 1rem center;
+	padding-right: 3rem;
+}
+
+[dir="rtl"] .mofeed-select {
+	background-position: left 1rem center;
+	padding-right: 1rem;
+	padding-left: 3rem;
+}
+
+/* Login Button */
+.mofeed-login-btn {
+	width: 100%;
+	padding: 1rem 1.5rem;
+	font-size: 1.125rem;
+	font-weight: 600;
+	color: var(--mofeed-white);
+	background: var(--mofeed-primary);
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.mofeed-login-btn:hover {
+	background: #0A6FC2;
+	box-shadow: 0 4px 12px rgba(12, 130, 230, 0.3);
+}
+
+.mofeed-login-btn:active {
+	transform: scale(0.98);
+}
+
+.mofeed-login-btn:disabled {
+	background: var(--mofeed-text-light);
+	cursor: not-allowed;
+}
+
+.btn-text-ar {
+	font-family: 'Cairo', sans-serif;
+}
+
+/* Spinner */
+.spinner {
+	width: 20px;
+	height: 20px;
+	border: 2px solid var(--mofeed-white);
+	border-top-color: transparent;
+	border-radius: 50%;
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Login Options */
+.login-options {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 1.25rem;
+	font-size: 0.875rem;
+}
+
+.remember-me {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	cursor: pointer;
+	color: var(--mofeed-text);
+}
+
+.remember-me input[type="checkbox"] {
+	width: 18px;
+	height: 18px;
+	accent-color: var(--mofeed-primary);
+	cursor: pointer;
+}
+
+.forgot-password {
+	color: var(--mofeed-primary);
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.forgot-password:hover {
+	color: #0A6FC2;
+	text-decoration: underline;
+}
+
+/* Error Message */
+.login-error {
+	margin-top: 1rem;
+	padding: 0.875rem 1rem;
+	background: #FEF2F2;
+	border: 1px solid #FECACA;
+	border-radius: 8px;
+	color: var(--mofeed-error);
+	font-size: 0.875rem;
+	text-align: center;
+}
+
+/* Footer */
+.mofeed-login-footer {
+	margin-top: 2rem;
+	text-align: center;
+	color: var(--mofeed-text-light);
+	font-size: 0.875rem;
+}
+
+/* RTL Adjustments */
+[dir="rtl"] .mofeed-login-container {
+	font-family: 'Cairo', 'Inter', sans-serif;
+}
+
+[dir="rtl"] .login-options {
+	flex-direction: row-reverse;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+	.mofeed-login-card {
+		padding: 2rem 1.5rem;
+		margin: 1rem;
+	}
+
+	.mofeed-title-ar {
+		font-size: 1.5rem;
+	}
+
+	.mofeed-title-en {
+		font-size: 0.875rem;
+	}
+
+	.logo-icon svg {
+		width: 64px;
+		height: 64px;
+	}
+
+	.login-options {
+		flex-direction: column;
+		gap: 0.75rem;
+		align-items: flex-start;
+	}
+
+	[dir="rtl"] .login-options {
+		align-items: flex-end;
+	}
+}
+
+/* Hide navbar and footer on login page */
+.mofeed-login-container ~ .navbar,
+.mofeed-login-container ~ footer,
+body > .navbar,
+body > footer {
+	display: none !important;
+}
+
+/* Override Frappe default styles */
+.page-container {
+	padding: 0 !important;
+}
+
+.main-section {
+	padding: 0 !important;
+	max-width: none !important;
+}

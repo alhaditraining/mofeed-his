@@ -1,0 +1,196 @@
+{% extends "templates/web.html" %}
+
+{% block title %}{{ _("Login") }} - Al-Mofeed HIS{% endblock %}
+
+{% block page_content %}
+<div class="mofeed-login-container">
+	<div class="mofeed-login-card">
+		<!-- Logo Section -->
+		<div class="mofeed-login-logo">
+			<div class="logo-icon">
+				<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<circle cx="32" cy="32" r="30" fill="#0C82E6"/>
+					<path d="M32 16V48M16 32H48" stroke="white" stroke-width="6" stroke-linecap="round"/>
+				</svg>
+			</div>
+			<h1 class="mofeed-title-ar">المفيد لإدارة المستشفيات</h1>
+			<h2 class="mofeed-title-en">Al-Mofeed Hospital Information System</h2>
+		</div>
+
+		<!-- Login Form -->
+		<form class="mofeed-login-form" id="mofeed-login-form">
+			<div class="form-group">
+				<label for="login-username">
+					<span class="label-en">Username</span>
+					<span class="label-ar">اسم المستخدم</span>
+				</label>
+				<input 
+					type="text" 
+					id="login-username" 
+					name="usr" 
+					class="form-control mofeed-input" 
+					placeholder="{{ _('Enter your username') }}"
+					autocomplete="username"
+					required
+				>
+			</div>
+
+			<div class="form-group">
+				<label for="login-password">
+					<span class="label-en">Password</span>
+					<span class="label-ar">كلمة المرور</span>
+				</label>
+				<div class="password-input-wrapper">
+					<input 
+						type="password" 
+						id="login-password" 
+						name="pwd" 
+						class="form-control mofeed-input" 
+						placeholder="{{ _('Enter your password') }}"
+						autocomplete="current-password"
+						required
+					>
+					<button type="button" class="toggle-password" id="toggle-password" aria-label="Toggle password visibility">
+						<svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+							<circle cx="12" cy="12" r="3"></circle>
+						</svg>
+					</button>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="login-language">
+					<span class="label-en">Language</span>
+					<span class="label-ar">اللغة</span>
+					<span class="label-ku">زمان</span>
+				</label>
+				<select id="login-language" name="language" class="form-control mofeed-select">
+					<option value="ar" {% if frappe.local.lang == 'ar' %}selected{% endif %}>العربية (Arabic)</option>
+					<option value="en" {% if frappe.local.lang == 'en' %}selected{% endif %}>English</option>
+					<option value="ku" {% if frappe.local.lang == 'ku' %}selected{% endif %}>کوردی (Kurdish)</option>
+				</select>
+			</div>
+
+			<button type="submit" class="btn btn-primary mofeed-login-btn" id="login-btn">
+				<span class="btn-text-en">Login</span>
+				<span class="btn-text-ar">تسجيل الدخول</span>
+			</button>
+
+			<div class="login-options">
+				<label class="remember-me">
+					<input type="checkbox" name="remember" id="remember-me">
+					<span class="label-en">Remember me</span>
+					<span class="label-ar">تذكرني</span>
+				</label>
+				<a href="/forgot-password" class="forgot-password">
+					<span class="label-en">Forgot Password?</span>
+					<span class="label-ar">نسيت كلمة المرور؟</span>
+				</a>
+			</div>
+
+			<div class="login-error" id="login-error" style="display: none;">
+				<span id="login-error-message"></span>
+			</div>
+		</form>
+	</div>
+
+	<div class="mofeed-login-footer">
+		<p>&copy; {{ frappe.utils.now_datetime().year }} Al-Mofeed HIS. {{ _("All rights reserved.") }}</p>
+	</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	const form = document.getElementById('mofeed-login-form');
+	const loginBtn = document.getElementById('login-btn');
+	const errorDiv = document.getElementById('login-error');
+	const errorMessage = document.getElementById('login-error-message');
+	const languageSelect = document.getElementById('login-language');
+	const togglePassword = document.getElementById('toggle-password');
+	const passwordInput = document.getElementById('login-password');
+
+	// Toggle password visibility
+	togglePassword.addEventListener('click', function() {
+		const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+		passwordInput.setAttribute('type', type);
+		this.classList.toggle('showing');
+	});
+
+	// Handle language change
+	languageSelect.addEventListener('change', function() {
+		const lang = this.value;
+		document.documentElement.setAttribute('dir', lang === 'ar' || lang === 'ku' ? 'rtl' : 'ltr');
+		document.documentElement.setAttribute('lang', lang);
+	});
+
+	// Set initial direction based on selected language
+	const initialLang = languageSelect.value;
+	document.documentElement.setAttribute('dir', initialLang === 'ar' || initialLang === 'ku' ? 'rtl' : 'ltr');
+	document.documentElement.setAttribute('lang', initialLang);
+
+	// Handle form submission
+	form.addEventListener('submit', function(e) {
+		e.preventDefault();
+		
+		const username = document.getElementById('login-username').value;
+		const password = document.getElementById('login-password').value;
+		const language = languageSelect.value;
+
+		// Show loading state
+		loginBtn.disabled = true;
+		loginBtn.innerHTML = '<span class="spinner"></span>';
+
+		// Hide previous errors
+		errorDiv.style.display = 'none';
+
+		// Call Frappe login API
+		frappe.call({
+			method: 'login',
+			args: {
+				usr: username,
+				pwd: password
+			},
+			callback: function(r) {
+				if (r.message === 'Logged In') {
+					// Set language preference asynchronously, then redirect
+					if (language) {
+						frappe.call({
+							method: 'frappe.client.set_value',
+							args: {
+								doctype: 'User',
+								name: username,
+								fieldname: 'language',
+								value: language
+							},
+							callback: function() {
+								window.location.href = '/app';
+							},
+							error: function() {
+								// Redirect even if language setting fails
+								window.location.href = '/app';
+							}
+						});
+					} else {
+						// Redirect to desk
+						window.location.href = '/app';
+					}
+				}
+			},
+			error: function(r) {
+				loginBtn.disabled = false;
+				loginBtn.innerHTML = '<span class="btn-text-en">Login</span><span class="btn-text-ar">تسجيل الدخول</span>';
+				
+				let message = 'Login failed. Please check your credentials.';
+				if (r && r.message) {
+					message = r.message;
+				}
+				
+				errorMessage.textContent = message;
+				errorDiv.style.display = 'block';
+			}
+		});
+	});
+});
+</script>
+{% endblock %}

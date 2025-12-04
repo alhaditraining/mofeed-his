@@ -1,0 +1,606 @@
+{% extends "templates/web.html" %}
+
+{% block title %}{{ _("Login") }} – {{ _("Al-Mofeed HIS") }}{% endblock %}
+
+{% block head_include %}
+<style>
+/* ───────────────────────────────────────────────────────────
+   Al-Mofeed HIS – Custom Login Template
+   Multi-language (ar, en, ku) with RTL support
+─────────────────────────────────────────────────────────── */
+
+/* Base Variables */
+:root {
+    --primary-color: #0C82E6;
+    --primary-hover: #0a6ec7;
+    --secondary-color: #26C6DA;
+    --accent-color: #4CAF50;
+    --bg-color: #F9FAFB;
+    --text-color: #1F2937;
+    --border-color: #E5E7EB;
+    --input-bg: #FFFFFF;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --radius: 8px;
+}
+
+/* Reset & Base */
+* {
+    box-sizing: border-box;
+}
+
+body.login-page {
+    background: linear-gradient(135deg, var(--bg-color) 0%, #E0F2FE 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', 'Cairo', 'Noto Sans Arabic', sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* RTL Support for Arabic */
+body.login-page[dir="rtl"] {
+    font-family: 'Cairo', 'Noto Sans Arabic', 'Inter', sans-serif;
+}
+
+body.login-page[dir="rtl"] .login-card,
+body.login-page[dir="rtl"] .form-group,
+body.login-page[dir="rtl"] .login-form {
+    direction: rtl;
+    text-align: right;
+}
+
+body.login-page[dir="rtl"] .form-input {
+    text-align: right;
+}
+
+body.login-page[dir="rtl"] .password-toggle {
+    left: 12px;
+    right: auto;
+}
+
+body.login-page[dir="rtl"] .form-input.password-input {
+    padding-left: 48px;
+    padding-right: 16px;
+}
+
+/* Login Card Container */
+.login-container {
+    width: 100%;
+    max-width: 420px;
+}
+
+.login-card {
+    background: var(--input-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    padding: 40px 32px;
+    border: 1px solid var(--border-color);
+}
+
+/* Header / Logo Area */
+.login-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.login-logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 16px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.login-title {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.login-subtitle {
+    font-size: 0.875rem;
+    color: #6B7280;
+    margin: 0;
+}
+
+/* Form Styles */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    background: var(--input-bg);
+    color: var(--text-color);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(12, 130, 230, 0.1);
+}
+
+.form-input::placeholder {
+    color: #9CA3AF;
+}
+
+/* Password Field with Toggle */
+.password-wrapper {
+    position: relative;
+}
+
+.password-input {
+    padding-right: 48px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6B7280;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-toggle:hover {
+    color: var(--primary-color);
+}
+
+/* Language Selector */
+.language-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.language-select {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    background: var(--input-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236B7280' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+}
+
+body.login-page[dir="rtl"] .language-select {
+    background-position: left 12px center;
+    padding-left: 40px;
+    padding-right: 16px;
+}
+
+.language-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(12, 130, 230, 0.1);
+}
+
+/* Login Button */
+.btn-login {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background: var(--primary-color);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-login:hover {
+    background: var(--primary-hover);
+}
+
+.btn-login:active {
+    transform: scale(0.98);
+}
+
+.btn-login:disabled {
+    background: #9CA3AF;
+    cursor: not-allowed;
+}
+
+/* Remember Me & Forgot Password */
+.form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.875rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--primary-color);
+}
+
+.forgot-link {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+/* Alert Messages */
+.alert {
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+}
+
+.alert-danger {
+    background: #FEE2E2;
+    color: #991B1B;
+    border: 1px solid #FECACA;
+}
+
+.alert-success {
+    background: #D1FAE5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+}
+
+/* Loading Spinner */
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: none;
+}
+
+.btn-login.loading .spinner {
+    display: block;
+}
+
+.btn-login.loading .btn-text {
+    display: none;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 32px 24px;
+    }
+    
+    .login-title {
+        font-size: 1.25rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block page_content %}
+<div class="login-container">
+    <div class="login-card">
+        <!-- Header / Logo -->
+        <div class="login-header">
+            <div class="login-logo">
+                <span>م</span>
+            </div>
+            <h1 class="login-title">المفيد لإدارة المستشفيات</h1>
+            <p class="login-subtitle">Al-Mofeed Hospital Information System</p>
+        </div>
+
+        <!-- Alert Messages (shown on error/success) -->
+        {% if message %}
+        <div class="alert alert-{% if message_type == 'error' %}danger{% else %}success{% endif %}">
+            {{ message }}
+        </div>
+        {% endif %}
+
+        <!-- Login Form -->
+        <form class="login-form" id="login-form" method="POST" action="/api/method/login">
+            <!-- CSRF Token - Required for Frappe security -->
+            <input type="hidden" name="csrf_token" value="{{ frappe.session.csrf_token }}">
+
+            <!-- Username Field -->
+            <div class="form-group">
+                <label class="form-label" for="usr">
+                    {{ _("Username") }} / اسم المستخدم
+                </label>
+                <input 
+                    type="text" 
+                    class="form-input" 
+                    id="usr" 
+                    name="usr" 
+                    placeholder="{{ _('Enter your username or email') }}"
+                    autocomplete="username"
+                    required
+                    autofocus
+                >
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label class="form-label" for="pwd">
+                    {{ _("Password") }} / كلمة المرور
+                </label>
+                <div class="password-wrapper">
+                    <input 
+                        type="password" 
+                        class="form-input password-input" 
+                        id="pwd" 
+                        name="pwd" 
+                        placeholder="{{ _('Enter your password') }}"
+                        autocomplete="current-password"
+                        required
+                    >
+                    <button type="button" class="password-toggle" id="toggle-password" aria-label="{{ _('Toggle password visibility') }}">
+                        <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <svg id="eye-off-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Language Selector -->
+            <div class="form-group language-group">
+                <label class="form-label" for="language">
+                    {{ _("Language") }} / اللغة / زمان
+                </label>
+                <select class="language-select" id="language" name="language">
+                    <option value="ar" {% if frappe.local.lang == 'ar' %}selected{% endif %}>
+                        العربية (Arabic)
+                    </option>
+                    <option value="en" {% if frappe.local.lang == 'en' %}selected{% endif %}>
+                        English
+                    </option>
+                    <option value="ku" {% if frappe.local.lang == 'ku' %}selected{% endif %}>
+                        کوردی (Kurdish)
+                    </option>
+                </select>
+            </div>
+
+            <!-- Remember Me & Forgot Password -->
+            <div class="form-footer">
+                <label class="remember-me">
+                    <input type="checkbox" name="remember_me" id="remember_me">
+                    <span>{{ _("Remember me") }} / تذكرني</span>
+                </label>
+                <a href="/forgot-password" class="forgot-link">
+                    {{ _("Forgot?") }}
+                </a>
+            </div>
+
+            <!-- Login Button -->
+            <button type="submit" class="btn-login" id="btn-login">
+                <span class="btn-text">{{ _("Login") }} – تسجيل الدخول</span>
+                <div class="spinner"></div>
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // ─────────────────────────────────────────────────────────
+    // Al-Mofeed HIS – Login Page JavaScript
+    // Handles: RTL switching, password toggle, form submission
+    // ─────────────────────────────────────────────────────────
+
+    const loginForm = document.getElementById('login-form');
+    const languageSelect = document.getElementById('language');
+    const passwordInput = document.getElementById('pwd');
+    const togglePasswordBtn = document.getElementById('toggle-password');
+    const eyeIcon = document.getElementById('eye-icon');
+    const eyeOffIcon = document.getElementById('eye-off-icon');
+    const btnLogin = document.getElementById('btn-login');
+    const loginCard = document.querySelector('.login-card');
+    const loginHeader = document.querySelector('.login-header');
+
+    // ─────────────────────────────────────────────────────────
+    // Alert Display Helper
+    // Shows error/success messages in the page (not using alert())
+    // ─────────────────────────────────────────────────────────
+    function showAlert(message, type) {
+        // Remove any existing alerts
+        const existingAlert = loginCard.querySelector('.alert');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+        
+        // Create new alert element
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-' + (type === 'error' ? 'danger' : type);
+        alertDiv.textContent = message;
+        
+        // Insert after header
+        loginHeader.insertAdjacentElement('afterend', alertDiv);
+        
+        // Auto-remove after 5 seconds for success messages
+        if (type === 'success') {
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────
+    // RTL Switch for Arabic
+    // When Arabic is selected, switch body direction to RTL
+    // ─────────────────────────────────────────────────────────
+    function updateDirection(lang) {
+        const body = document.body;
+        if (lang === 'ar') {
+            body.setAttribute('dir', 'rtl');
+        } else {
+            body.setAttribute('dir', 'ltr');
+        }
+    }
+
+    // Set initial direction based on current language
+    updateDirection(languageSelect.value);
+
+    // Handle language change
+    languageSelect.addEventListener('change', function() {
+        const selectedLang = this.value;
+        updateDirection(selectedLang);
+        
+        // Optionally: Store preference in cookie or redirect with lang param
+        // This allows the server to set the session language
+        document.cookie = 'preferred_language=' + selectedLang + '; path=/; max-age=31536000';
+    });
+
+    // ─────────────────────────────────────────────────────────
+    // Password Visibility Toggle
+    // ─────────────────────────────────────────────────────────
+    togglePasswordBtn.addEventListener('click', function() {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        eyeIcon.style.display = isPassword ? 'none' : 'block';
+        eyeOffIcon.style.display = isPassword ? 'block' : 'none';
+    });
+
+    // ─────────────────────────────────────────────────────────
+    // Form Submission Handler
+    // ─────────────────────────────────────────────────────────
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Show loading state
+        btnLogin.classList.add('loading');
+        btnLogin.disabled = true;
+
+        // Get form data
+        const formData = new FormData(loginForm);
+        const data = {
+            usr: formData.get('usr'),
+            pwd: formData.get('pwd'),
+            csrf_token: formData.get('csrf_token')
+        };
+
+        // Set the language preference before login
+        const selectedLang = formData.get('language');
+        if (selectedLang) {
+            // This will be handled by Frappe after successful login
+            data.language = selectedLang;
+        }
+
+        // Make AJAX request to Frappe login API
+        fetch('/api/method/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Frappe-CSRF-Token': data.csrf_token
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.message === 'Logged In' || result.message === 'No App') {
+                // Login successful - set language and redirect
+                if (selectedLang) {
+                    // Get the logged-in user from session (handles email login)
+                    const loggedInUser = result.full_name ? data.usr : data.usr;
+                    
+                    // Update user language preference via API
+                    // Note: Frappe will use the session user, so we use frappe.client.set_value
+                    return fetch('/api/method/frappe.client.set_value', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Frappe-CSRF-Token': data.csrf_token
+                        },
+                        body: JSON.stringify({
+                            doctype: 'User',
+                            name: result.user || data.usr,  // Use session user if available
+                            fieldname: 'language',
+                            value: selectedLang
+                        })
+                    }).then(() => {
+                        // Redirect to desk or home
+                        window.location.href = '/app';
+                    }).catch(() => {
+                        // Even if language update fails, still redirect
+                        window.location.href = '/app';
+                    });
+                } else {
+                    window.location.href = '/app';
+                }
+            } else {
+                // Login failed - show error
+                throw new Error(result.message || 'Login failed');
+            }
+        })
+        .catch(error => {
+            console.error('Login error:', error);
+            // Reset button state
+            btnLogin.classList.remove('loading');
+            btnLogin.disabled = false;
+            
+            // Show error message in the page alert area
+            showAlert(error.message || 'An error occurred. Please try again.', 'danger');
+        });
+    });
+});
+</script>
+{% endblock %}

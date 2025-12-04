@@ -1,0 +1,176 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:clinic_name",
+ "creation": "2025-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "clinic_name",
+  "clinic_code",
+  "hospital",
+  "column_break_1",
+  "specialty",
+  "clinic_type",
+  "is_active",
+  "details_section",
+  "description",
+  "column_break_2",
+  "default_consultation_fee",
+  "default_followup_fee",
+  "schedule_section",
+  "working_days",
+  "working_hours_start",
+  "working_hours_end",
+  "column_break_3",
+  "slot_duration",
+  "max_patients_per_slot"
+ ],
+ "fields": [
+  {
+   "fieldname": "clinic_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Clinic Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "clinic_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Clinic Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "hospital",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Hospital",
+   "options": "Hospital",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "specialty",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Specialty",
+   "options": "\nGeneral Practice\nInternal Medicine\nPediatrics\nDermatology\nOrthopedics\nCardiology\nNeurology\nOphthalmology\nENT\nObstetrics & Gynecology\nGeneral Surgery\nUrology\nPsychiatry\nDentistry\nRadiology\nPathology\nEmergency Medicine\nAnesthesiology\nOncology\nNephrology\nGastroenterology\nPulmonology\nEndocrinology\nRheumatology\nPhysical Therapy"
+  },
+  {
+   "fieldname": "clinic_type",
+   "fieldtype": "Select",
+   "label": "Clinic Type",
+   "options": "\nOutpatient\nInpatient\nEmergency\nDaycare\nDiagnostic"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "default_consultation_fee",
+   "fieldtype": "Currency",
+   "label": "Default Consultation Fee"
+  },
+  {
+   "fieldname": "default_followup_fee",
+   "fieldtype": "Currency",
+   "label": "Default Follow-up Fee"
+  },
+  {
+   "fieldname": "schedule_section",
+   "fieldtype": "Section Break",
+   "label": "Schedule Settings"
+  },
+  {
+   "fieldname": "working_days",
+   "fieldtype": "Select",
+   "label": "Working Days",
+   "options": "\nSunday to Thursday\nSaturday to Thursday\nSaturday to Wednesday\nAll Week"
+  },
+  {
+   "fieldname": "working_hours_start",
+   "fieldtype": "Time",
+   "label": "Working Hours Start"
+  },
+  {
+   "fieldname": "working_hours_end",
+   "fieldtype": "Time",
+   "label": "Working Hours End"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "15",
+   "fieldname": "slot_duration",
+   "fieldtype": "Int",
+   "description": "Duration of each appointment slot in minutes",
+   "label": "Slot Duration (minutes)"
+  },
+  {
+   "default": "1",
+   "fieldname": "max_patients_per_slot",
+   "fieldtype": "Int",
+   "label": "Max Patients Per Slot"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Mofeed HIS",
+ "name": "Clinic",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Healthcare Administrator",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
