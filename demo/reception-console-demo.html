@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reception Console - Al-Mofeed HIS Demo</title>
+    <style>
+        /* Import Google Fonts for Arabic and English */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+        /* CSS Variables */
+        :root {
+            --mofeed-primary: #0C82E6;
+            --mofeed-secondary: #26C6DA;
+            --mofeed-accent: #4CAF50;
+            --mofeed-background: #F9FAFB;
+            --mofeed-text: #1F2937;
+            --mofeed-text-light: #6B7280;
+            --mofeed-border: #E5E7EB;
+            --mofeed-white: #FFFFFF;
+            --mofeed-danger: #EF4444;
+            --mofeed-warning: #F59E0B;
+            --mofeed-success: #10B981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--mofeed-background);
+            color: var(--mofeed-text);
+            line-height: 1.5;
+        }
+
+        /* Main Container */
+        .reception-console-container {
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Header Section */
+        .reception-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--mofeed-primary);
+        }
+
+        .reception-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--mofeed-primary);
+        }
+
+        /* Search Section */
+        .search-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: var(--mofeed-white);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar-container {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--mofeed-text);
+            margin-bottom: 8px;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 60px 12px 15px;
+            font-size: 16px;
+            border: 2px solid var(--mofeed-border);
+            border-radius: 8px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--mofeed-primary);
+            box-shadow: 0 0 0 3px rgba(12, 130, 230, 0.1);
+            outline: none;
+        }
+
+        .search-shortcut {
+            position: absolute;
+            right: 15px;
+            color: var(--mofeed-text-light);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--mofeed-primary);
+            color: var(--mofeed-white);
+        }
+
+        .btn-primary:hover {
+            background-color: #0a6fc7;
+        }
+
+        .btn-secondary {
+            background-color: var(--mofeed-white);
+            border: 2px solid var(--mofeed-border);
+            color: var(--mofeed-text);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--mofeed-background);
+            border-color: var(--mofeed-primary);
+            color: var(--mofeed-primary);
+        }
+
+        /* Content Grid */
+        .reception-content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .reception-content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background-color: var(--mofeed-white);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--mofeed-background);
+            border-bottom: 1px solid var(--mofeed-border);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--mofeed-text);
+        }
+
+        .section-body {
+            padding: 20px;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 24px;
+            height: 24px;
+            padding: 0 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--mofeed-white);
+            background-color: var(--mofeed-primary);
+            border-radius: 12px;
+        }
+
+        /* Tables */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--mofeed-border);
+        }
+
+        .table th {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--mofeed-text-light);
+            background-color: var(--mofeed-background);
+        }
+
+        .table tbody tr {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(12, 130, 230, 0.05);
+        }
+
+        .table tbody tr.selected {
+            background-color: rgba(12, 130, 230, 0.1);
+            border-left: 3px solid var(--mofeed-primary);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 4px;
+        }
+
+        .status-booked {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #3B82F6;
+        }
+
+        .status-arrived {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--mofeed-success);
+        }
+
+        /* Queue Number */
+        .queue-number {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--mofeed-primary);
+        }
+
+        /* Wait Time */
+        .wait-time-cell {
+            color: var(--mofeed-text-light);
+            font-size: 13px;
+        }
+
+        /* Queue Filter */
+        .queue-filter {
+            min-width: 200px;
+        }
+
+        .queue-select {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid var(--mofeed-border);
+            border-radius: 6px;
+            background-color: var(--mofeed-white);
+        }
+
+        /* Patient Details Card */
+        .patient-details-section {
+            position: sticky;
+            top: 20px;
+        }
+
+        .patient-card {
+            padding: 10px 0;
+        }
+
+        .patient-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--mofeed-border);
+        }
+
+        .patient-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--mofeed-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-initials {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--mofeed-white);
+        }
+
+        .patient-main-info {
+            flex: 1;
+        }
+
+        .patient-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--mofeed-text);
+            margin: 0 0 5px 0;
+        }
+
+        .patient-mrn {
+            font-size: 14px;
+            color: var(--mofeed-text-light);
+            margin: 0;
+        }
+
+        /* Patient Details Grid */
+        .patient-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .detail-item label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--mofeed-text-light);
+            text-transform: uppercase;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: var(--mofeed-text);
+        }
+
+        .outstanding-zero {
+            color: var(--mofeed-success);
+            font-weight: 500;
+        }
+
+        /* Patient Action Buttons */
+        .patient-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .patient-actions .btn-action {
+            padding: 14px 20px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .patient-actions .btn-primary {
+            background-color: var(--mofeed-accent);
+            border: none;
+            color: var(--mofeed-white);
+        }
+
+        .patient-actions .btn-primary:hover {
+            background-color: #43A047;
+        }
+
+        /* Small Buttons */
+        .btn-xs {
+            padding: 4px 10px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+
+        .btn-success {
+            background-color: var(--mofeed-success);
+            color: var(--mofeed-white);
+            border: none;
+        }
+
+        .btn-info {
+            background-color: var(--mofeed-secondary);
+            color: var(--mofeed-white);
+            border: none;
+        }
+
+        /* Placeholder Notes */
+        .placeholder-note {
+            margin: 10px 0 0 0;
+            padding: 10px;
+            background-color: rgba(245, 158, 11, 0.1);
+            border-radius: 4px;
+            border-left: 3px solid var(--mofeed-warning);
+            font-size: 12px;
+            color: var(--mofeed-text-light);
+        }
+
+        /* Demo Banner */
+        .demo-banner {
+            background-color: var(--mofeed-primary);
+            color: var(--mofeed-white);
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-banner">
+        📋 Demo Preview - Reception Console | Al-Mofeed HIS
+    </div>
+
+    <div class="reception-console-container">
+        <!-- Header Section -->
+        <div class="reception-header">
+            <h1 class="reception-title">Al-Mofeed HIS – Reception Workspace</h1>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-bar-container">
+                <label for="patient-search" class="search-label">Search Patient:</label>
+                <div class="search-input-wrapper">
+                    <input 
+                        type="text" 
+                        id="patient-search" 
+                        class="search-input" 
+                        placeholder="Search by name, phone, MRN, or national ID..."
+                    />
+                    <span class="search-shortcut">(F2)</span>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary">
+                    <span>➕</span> New Patient
+                </button>
+                <button class="btn btn-secondary">
+                    <span>📅</span> New Appointment
+                </button>
+                <button class="btn btn-secondary">
+                    <span>📋</span> Today's Appointments
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="reception-content-grid">
+            <!-- Left Column: Appointments & Queue -->
+            <div class="left-column">
+                <!-- Appointments Table Section -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">Appointments (Today)</h2>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="section-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Patient Name</th>
+                                    <th>Doctor</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>09:00</td>
+                                    <td>Ali Hassan</td>
+                                    <td>Dr. Ahmed (Dermatology)</td>
+                                    <td><span class="status-badge status-booked">Booked</span></td>
+                                    <td><button class="btn btn-xs btn-success">Check-In</button></td>
+                                </tr>
+                                <tr class="selected">
+                                    <td>09:15</td>
+                                    <td>Zainab Ahmed</td>
+                                    <td>Dr. Ahmed (Dermatology)</td>
+                                    <td><span class="status-badge status-arrived">Arrived</span></td>
+                                    <td><button class="btn btn-xs btn-info">View File</button></td>
+                                </tr>
+                                <tr>
+                                    <td>09:30</td>
+                                    <td>Ahmad Saeed</td>
+                                    <td>Dr. Fatima (General)</td>
+                                    <td><span class="status-badge status-booked">Booked</span></td>
+                                    <td><button class="btn btn-xs btn-success">Check-In</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="placeholder-note">
+                            * Static placeholder data. Will be connected to Appointment doctype.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Waiting Queue Section -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">Waiting Queue</h2>
+                        <div class="queue-filter">
+                            <select class="queue-select">
+                                <option value="all">All Doctors</option>
+                                <option value="dr-ahmed" selected>Dr. Ahmed (Dermatology)</option>
+                                <option value="dr-fatima">Dr. Fatima (General)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="section-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Patient Name</th>
+                                    <th>Arrival Time</th>
+                                    <th>Wait Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="queue-number">1</td>
+                                    <td>Zainab Ahmed</td>
+                                    <td>09:10</td>
+                                    <td class="wait-time-cell">5 min</td>
+                                </tr>
+                                <tr>
+                                    <td class="queue-number">2</td>
+                                    <td>Ali Hassan</td>
+                                    <td>09:05</td>
+                                    <td class="wait-time-cell">10 min</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="placeholder-note">
+                            * Static placeholder data. Queue auto-sorted by arrival time.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Selected Patient Details -->
+            <div class="right-column">
+                <div class="section-card patient-details-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Selected Patient</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="patient-card">
+                            <div class="patient-info">
+                                <div class="patient-avatar">
+                                    <span class="avatar-initials">ZA</span>
+                                </div>
+                                <div class="patient-main-info">
+                                    <h3 class="patient-name">Zainab Ahmed</h3>
+                                    <p class="patient-mrn">MRN: 2025-KRB-00123</p>
+                                </div>
+                            </div>
+                            
+                            <div class="patient-details-grid">
+                                <div class="detail-item">
+                                    <label>Insurance:</label>
+                                    <span class="detail-value">Al-Waha – 90% coverage</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Outstanding:</label>
+                                    <span class="detail-value outstanding-zero">0 IQD</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Phone:</label>
+                                    <span class="detail-value">0770 XXX XXX</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Visit Type:</label>
+                                    <span class="detail-value">Follow-up</span>
+                                </div>
+                            </div>
+
+                            <div class="patient-actions">
+                                <button class="btn btn-action btn-primary">
+                                    <span>✓</span> Check-In
+                                </button>
+                                <button class="btn btn-action btn-secondary">
+                                    <span>📁</span> View File
+                                </button>
+                                <button class="btn btn-action btn-secondary">
+                                    <span>💳</span> Billing
+                                </button>
+                            </div>
+                        </div>
+                        <p class="placeholder-note">
+                            * Static placeholder data. Will be connected to Patient doctype.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

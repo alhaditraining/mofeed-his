@@ -1,0 +1,196 @@
+<!-- Reception Console Page -->
+<div class="reception-console-container">
+    <!-- Header Section -->
+    <div class="reception-header">
+        <h1 class="reception-title">{{ _("Al-Mofeed HIS – Reception Workspace") }}</h1>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-section">
+        <div class="search-bar-container">
+            <label for="patient-search" class="search-label">{{ _("Search Patient:") }}</label>
+            <div class="search-input-wrapper">
+                <input 
+                    type="text" 
+                    id="patient-search" 
+                    class="form-control search-input" 
+                    placeholder="{{ _('Search by name, phone, MRN, or national ID...') }}"
+                    title="{{ _('Press F2 for quick search') }}"
+                />
+                <span class="search-shortcut">(F2)</span>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button class="btn btn-primary btn-new-patient" title="{{ _('F1: New Patient') }}">
+                <span class="icon">➕</span> {{ _("New Patient") }}
+            </button>
+            <button class="btn btn-secondary btn-new-appointment" title="{{ _('F3: New Appointment') }}">
+                <span class="icon">📅</span> {{ _("New Appointment") }}
+            </button>
+            <button class="btn btn-secondary btn-today-appointments">
+                <span class="icon">📋</span> {{ _("Today's Appointments") }}
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="reception-content-grid">
+        <!-- Left Column: Appointments & Queue -->
+        <div class="left-column">
+            <!-- Appointments Table Section -->
+            <div class="section-card appointments-section">
+                <div class="section-header">
+                    <h2 class="section-title">{{ _("Appointments (Today)") }}</h2>
+                    <span class="badge appointment-count">{{ appointments|length if appointments else 3 }}</span>
+                </div>
+                <div class="section-body">
+                    <table class="table appointments-table">
+                        <thead>
+                            <tr>
+                                <th>{{ _("Time") }}</th>
+                                <th>{{ _("Patient Name") }}</th>
+                                <th>{{ _("Doctor") }}</th>
+                                <th>{{ _("Status") }}</th>
+                                <th>{{ _("Actions") }}</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointments-body">
+                            <!-- Placeholder data - will be replaced with dynamic data -->
+                            <tr class="appointment-row" data-appointment-id="APT-001">
+                                <td class="time-cell">09:00</td>
+                                <td class="patient-cell">Ali Hassan</td>
+                                <td class="doctor-cell">Dr. Ahmed (Dermatology)</td>
+                                <td class="status-cell"><span class="status-badge status-booked">{{ _("Booked") }}</span></td>
+                                <td class="actions-cell">
+                                    <button class="btn btn-xs btn-success btn-check-in" title="{{ _('F4: Check-in') }}">{{ _("Check-In") }}</button>
+                                </td>
+                            </tr>
+                            <tr class="appointment-row selected" data-appointment-id="APT-002">
+                                <td class="time-cell">09:15</td>
+                                <td class="patient-cell">Zainab Ahmed</td>
+                                <td class="doctor-cell">Dr. Ahmed (Dermatology)</td>
+                                <td class="status-cell"><span class="status-badge status-arrived">{{ _("Arrived") }}</span></td>
+                                <td class="actions-cell">
+                                    <button class="btn btn-xs btn-info btn-view-file">{{ _("View File") }}</button>
+                                </td>
+                            </tr>
+                            <tr class="appointment-row" data-appointment-id="APT-003">
+                                <td class="time-cell">09:30</td>
+                                <td class="patient-cell">Ahmad Saeed</td>
+                                <td class="doctor-cell">Dr. Fatima (General)</td>
+                                <td class="status-cell"><span class="status-badge status-booked">{{ _("Booked") }}</span></td>
+                                <td class="actions-cell">
+                                    <button class="btn btn-xs btn-success btn-check-in" title="{{ _('F4: Check-in') }}">{{ _("Check-In") }}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="placeholder-note text-muted">
+                        <small>{{ _("* Static placeholder data. Will be connected to Appointment doctype.") }}</small>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Waiting Queue Section -->
+            <div class="section-card queue-section">
+                <div class="section-header">
+                    <h2 class="section-title">{{ _("Waiting Queue") }}</h2>
+                    <div class="queue-filter">
+                        <select id="doctor-queue-filter" class="form-control queue-select">
+                            <option value="all">{{ _("All Doctors") }}</option>
+                            <option value="dr-ahmed" selected>Dr. Ahmed (Dermatology)</option>
+                            <option value="dr-fatima">Dr. Fatima (General)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="section-body">
+                    <table class="table queue-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{ _("Patient Name") }}</th>
+                                <th>{{ _("Arrival Time") }}</th>
+                                <th>{{ _("Wait Time") }}</th>
+                            </tr>
+                        </thead>
+                        <tbody id="queue-body">
+                            <!-- Placeholder data - will be replaced with dynamic data -->
+                            <tr class="queue-row" data-patient-id="PAT-002">
+                                <td class="queue-number">1</td>
+                                <td class="patient-cell">Zainab Ahmed</td>
+                                <td class="arrival-cell">09:10</td>
+                                <td class="wait-time-cell">5 min</td>
+                            </tr>
+                            <tr class="queue-row" data-patient-id="PAT-001">
+                                <td class="queue-number">2</td>
+                                <td class="patient-cell">Ali Hassan</td>
+                                <td class="arrival-cell">09:05</td>
+                                <td class="wait-time-cell">10 min</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="placeholder-note text-muted">
+                        <small>{{ _("* Static placeholder data. Queue auto-sorted by arrival time.") }}</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Selected Patient Details -->
+        <div class="right-column">
+            <div class="section-card patient-details-section">
+                <div class="section-header">
+                    <h2 class="section-title">{{ _("Selected Patient") }}</h2>
+                </div>
+                <div class="section-body" id="patient-details-body">
+                    <!-- Patient Details Card - Placeholder -->
+                    <div class="patient-card">
+                        <div class="patient-info">
+                            <div class="patient-avatar">
+                                <span class="avatar-initials">ZA</span>
+                            </div>
+                            <div class="patient-main-info">
+                                <h3 class="patient-name">Zainab Ahmed</h3>
+                                <p class="patient-mrn">{{ _("MRN:") }} 2025-KRB-00123</p>
+                            </div>
+                        </div>
+                        
+                        <div class="patient-details-grid">
+                            <div class="detail-item">
+                                <label>{{ _("Insurance:") }}</label>
+                                <span class="detail-value">Al-Waha – 90% {{ _("coverage") }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>{{ _("Outstanding:") }}</label>
+                                <span class="detail-value outstanding-zero">0 IQD</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>{{ _("Phone:") }}</label>
+                                <span class="detail-value">0770 XXX XXX</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>{{ _("Visit Type:") }}</label>
+                                <span class="detail-value">{{ _("Follow-up") }}</span>
+                            </div>
+                        </div>
+
+                        <div class="patient-actions">
+                            <button class="btn btn-primary btn-lg btn-block btn-action" id="btn-check-in">
+                                <span class="icon">✓</span> {{ _("Check-In") }}
+                            </button>
+                            <button class="btn btn-secondary btn-lg btn-action" id="btn-view-file">
+                                <span class="icon">📁</span> {{ _("View File") }}
+                            </button>
+                            <button class="btn btn-secondary btn-lg btn-action" id="btn-billing">
+                                <span class="icon">💳</span> {{ _("Billing") }}
+                            </button>
+                        </div>
+                    </div>
+                    <p class="placeholder-note text-muted">
+                        <small>{{ _("* Static placeholder data. Will be connected to Patient doctype.") }}</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

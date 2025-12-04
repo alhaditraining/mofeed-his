@@ -1,0 +1,543 @@
+/**
+ * Reception Console Styles
+ * Al-Mofeed Hospital Information System
+ * 
+ * Color Scheme (Healthcare Clean):
+ * - Primary: #0C82E6 (Medical Blue)
+ * - Secondary: #26C6DA (Cyan)
+ * - Accent: #4CAF50 (Green)
+ * - Background: #F9FAFB
+ * - Text: #1F2937
+ */
+
+/* ============================================
+   CSS Variables
+   ============================================ */
+:root {
+    --mofeed-primary: #0C82E6;
+    --mofeed-secondary: #26C6DA;
+    --mofeed-accent: #4CAF50;
+    --mofeed-background: #F9FAFB;
+    --mofeed-text: #1F2937;
+    --mofeed-text-light: #6B7280;
+    --mofeed-border: #E5E7EB;
+    --mofeed-white: #FFFFFF;
+    --mofeed-danger: #EF4444;
+    --mofeed-warning: #F59E0B;
+    --mofeed-success: #10B981;
+}
+
+/* ============================================
+   Main Container
+   ============================================ */
+.reception-console-container {
+    padding: 20px;
+    background-color: var(--mofeed-background);
+    min-height: calc(100vh - 60px);
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* RTL Support */
+[dir="rtl"] .reception-console-container {
+    direction: rtl;
+    font-family: 'Cairo', 'Noto Sans Arabic', sans-serif;
+}
+
+/* ============================================
+   Header Section
+   ============================================ */
+.reception-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--mofeed-primary);
+}
+
+.reception-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--mofeed-primary);
+    margin: 0;
+}
+
+/* ============================================
+   Search Section
+   ============================================ */
+.search-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: var(--mofeed-white);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar-container {
+    flex: 1;
+    min-width: 300px;
+}
+
+.search-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--mofeed-text);
+    margin-bottom: 8px;
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 60px 12px 15px;
+    font-size: 16px;
+    border: 2px solid var(--mofeed-border);
+    border-radius: 8px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+    border-color: var(--mofeed-primary);
+    box-shadow: 0 0 0 3px rgba(12, 130, 230, 0.1);
+    outline: none;
+}
+
+.search-shortcut {
+    position: absolute;
+    right: 15px;
+    color: var(--mofeed-text-light);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.action-buttons .btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.action-buttons .btn-primary {
+    background-color: var(--mofeed-primary);
+    border-color: var(--mofeed-primary);
+    color: var(--mofeed-white);
+}
+
+.action-buttons .btn-primary:hover {
+    background-color: #0a6fc7;
+    border-color: #0a6fc7;
+}
+
+.action-buttons .btn-secondary {
+    background-color: var(--mofeed-white);
+    border: 2px solid var(--mofeed-border);
+    color: var(--mofeed-text);
+}
+
+.action-buttons .btn-secondary:hover {
+    background-color: var(--mofeed-background);
+    border-color: var(--mofeed-primary);
+    color: var(--mofeed-primary);
+}
+
+.action-buttons .icon {
+    font-size: 16px;
+}
+
+/* ============================================
+   Content Grid
+   ============================================ */
+.reception-content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 1200px) {
+    .reception-content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ============================================
+   Section Cards
+   ============================================ */
+.section-card {
+    background-color: var(--mofeed-white);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: var(--mofeed-background);
+    border-bottom: 1px solid var(--mofeed-border);
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--mofeed-text);
+    margin: 0;
+}
+
+.section-body {
+    padding: 20px;
+}
+
+/* Badge */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--mofeed-white);
+    background-color: var(--mofeed-primary);
+    border-radius: 12px;
+}
+
+/* ============================================
+   Tables
+   ============================================ */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.table th,
+.table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--mofeed-border);
+}
+
+[dir="rtl"] .table th,
+[dir="rtl"] .table td {
+    text-align: right;
+}
+
+.table th {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--mofeed-text-light);
+    background-color: var(--mofeed-background);
+}
+
+.table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(12, 130, 230, 0.05);
+}
+
+.table tbody tr.selected {
+    background-color: rgba(12, 130, 230, 0.1);
+    border-left: 3px solid var(--mofeed-primary);
+}
+
+[dir="rtl"] .table tbody tr.selected {
+    border-left: none;
+    border-right: 3px solid var(--mofeed-primary);
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+.status-booked {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #3B82F6;
+}
+
+.status-arrived {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--mofeed-success);
+}
+
+.status-in-progress {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: var(--mofeed-warning);
+}
+
+.status-completed {
+    background-color: rgba(107, 114, 128, 0.1);
+    color: var(--mofeed-text-light);
+}
+
+/* Queue Number */
+.queue-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--mofeed-primary);
+}
+
+/* Wait Time */
+.wait-time-cell {
+    color: var(--mofeed-text-light);
+    font-size: 13px;
+}
+
+/* ============================================
+   Queue Section
+   ============================================ */
+.queue-filter {
+    min-width: 200px;
+}
+
+.queue-select {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid var(--mofeed-border);
+    border-radius: 6px;
+    background-color: var(--mofeed-white);
+}
+
+.queue-select:focus {
+    border-color: var(--mofeed-primary);
+    outline: none;
+}
+
+/* ============================================
+   Patient Details Card
+   ============================================ */
+.patient-details-section {
+    position: sticky;
+    top: 20px;
+}
+
+.patient-card {
+    padding: 10px 0;
+}
+
+.patient-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--mofeed-border);
+}
+
+.patient-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--mofeed-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-initials {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--mofeed-white);
+}
+
+.patient-main-info {
+    flex: 1;
+}
+
+.patient-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--mofeed-text);
+    margin: 0 0 5px 0;
+}
+
+.patient-mrn {
+    font-size: 14px;
+    color: var(--mofeed-text-light);
+    margin: 0;
+}
+
+/* Patient Details Grid */
+.patient-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-item label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--mofeed-text-light);
+    text-transform: uppercase;
+}
+
+.detail-value {
+    font-size: 14px;
+    color: var(--mofeed-text);
+}
+
+.outstanding-zero {
+    color: var(--mofeed-success);
+    font-weight: 500;
+}
+
+/* Patient Action Buttons */
+.patient-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.patient-actions .btn-action {
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s;
+}
+
+.patient-actions .btn-primary {
+    background-color: var(--mofeed-accent);
+    border-color: var(--mofeed-accent);
+    color: var(--mofeed-white);
+}
+
+.patient-actions .btn-primary:hover {
+    background-color: #43A047;
+    border-color: #43A047;
+}
+
+.patient-actions .btn-secondary {
+    background-color: var(--mofeed-white);
+    border: 2px solid var(--mofeed-border);
+    color: var(--mofeed-text);
+}
+
+.patient-actions .btn-secondary:hover {
+    background-color: var(--mofeed-background);
+    border-color: var(--mofeed-primary);
+    color: var(--mofeed-primary);
+}
+
+/* ============================================
+   Small Buttons
+   ============================================ */
+.btn-xs {
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.btn-success {
+    background-color: var(--mofeed-success);
+    border-color: var(--mofeed-success);
+    color: var(--mofeed-white);
+}
+
+.btn-success:hover {
+    background-color: #059669;
+    border-color: #059669;
+}
+
+.btn-info {
+    background-color: var(--mofeed-secondary);
+    border-color: var(--mofeed-secondary);
+    color: var(--mofeed-white);
+}
+
+.btn-info:hover {
+    background-color: #1DB8CC;
+    border-color: #1DB8CC;
+}
+
+/* ============================================
+   Placeholder Notes
+   ============================================ */
+.placeholder-note {
+    margin: 10px 0 0 0;
+    padding: 10px;
+    background-color: rgba(245, 158, 11, 0.1);
+    border-radius: 4px;
+    border-left: 3px solid var(--mofeed-warning);
+}
+
+[dir="rtl"] .placeholder-note {
+    border-left: none;
+    border-right: 3px solid var(--mofeed-warning);
+}
+
+/* ============================================
+   Responsive Adjustments
+   ============================================ */
+@media (max-width: 768px) {
+    .reception-console-container {
+        padding: 15px;
+    }
+
+    .search-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-bar-container {
+        min-width: 100%;
+    }
+
+    .action-buttons {
+        justify-content: stretch;
+    }
+
+    .action-buttons .btn {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .patient-details-grid {
+        grid-template-columns: 1fr;
+    }
+}

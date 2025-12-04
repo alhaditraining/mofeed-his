@@ -1,0 +1,51 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"reception_console_link\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Reception Console\",\"col\":12}}]",
+ "creation": "2025-01-01 00:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "healthcare",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Mofeed HIS",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reception",
+   "link_count": 0,
+   "link_to": "reception-console",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2025-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Mofeed HIS",
+ "name": "Mofeed HIS",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "restrict_to_domain": "",
+ "roles": [],
+ "sequence_id": 1,
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "doc_view": "",
+   "format": "",
+   "icon": "reception",
+   "label": "Reception Console",
+   "link_to": "reception-console",
+   "restrict_to_domain": "",
+   "stats_filter": "",
+   "type": "Page"
+  }
+ ],
+ "title": "Mofeed HIS"
+}
