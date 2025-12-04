@@ -4,6 +4,7 @@ app_publisher = "Al-Mofeed Team"
 app_description = "Al-Mofeed Hospital Information System - Custom Frappe App for Iraqi Healthcare"
 app_email = "info@mofeed-his.com"
 app_license = "MIT"
+required_apps = ["frappe", "erpnext", "healthcare"]
 
 # Apps
 # ------------------
@@ -137,13 +138,12 @@ web_include_css = "/assets/mofeed_his/css/mofeed_login.css"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Patient": {
+		"before_insert": "mofeed_his.mofeed_his.utils.mrn.generate_patient_mrn",
+		"validate": "mofeed_his.mofeed_his.utils.mrn.validate_mrn_unique",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
@@ -234,6 +234,19 @@ web_include_css = "/assets/mofeed_his/css/mofeed_login.css"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+
+fixtures = [
+	{
+		"dt": "Custom Field",
+		"filters": [["name", "in", ["Patient-custom_mrn", "Patient-custom_hospital"]]],
+	},
+	{
+		"dt": "Property Setter",
+		"filters": [
+			["name", "in", ["Patient-custom_mrn-unique", "Patient-custom_mrn-search_index"]],
+		],
+	},
+]
 
 # Website Route Rules
 website_route_rules = [
