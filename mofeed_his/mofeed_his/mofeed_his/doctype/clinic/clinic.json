@@ -24,7 +24,9 @@
   "working_hours_end",
   "column_break_3",
   "slot_duration",
-  "max_patients_per_slot"
+  "max_patients_per_slot",
+  "services_section",
+  "services"
  ],
  "fields": [
   {
@@ -134,6 +136,17 @@
    "fieldname": "max_patients_per_slot",
    "fieldtype": "Int",
    "label": "Max Patients Per Slot"
+  },
+  {
+   "fieldname": "services_section",
+   "fieldtype": "Section Break",
+   "label": "Services"
+  },
+  {
+   "fieldname": "services",
+   "fieldtype": "Table",
+   "label": "Services",
+   "options": "Clinic Service"
   }
  ],
  "index_web_pages_for_search": 1,
