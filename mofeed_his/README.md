@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Al-Mofeed HIS
 
 A custom Frappe app for the Al-Mofeed Hospital Information System.
@@ -9,21 +8,11 @@ A custom Frappe app for the Al-Mofeed Hospital Information System.
 - Patient Extension with Iraqi localization
 - Custom multi-language login page (Arabic/English/Kurdish)
 - Healthcare theme with RTL support
-=======
-# Mofeed HIS - Frappe App
-
-Custom ERPNext/Healthcare app for Al-Mofeed Hospital Information System.
->>>>>>> 4d8907c (Add mofeed_his Frappe app with MRN generation feature)
+- MRN (Medical Record Number) generation
 
 ## Installation
 
 ```bash
-<<<<<<< HEAD
-bench get-app mofeed_his
-bench --site yoursite install-app mofeed_his
-```
-
-=======
 cd ~/frappe-bench
 bench get-app mofeed_his /path/to/mofeed_his
 bench --site yoursite install-app mofeed_his
@@ -53,17 +42,14 @@ Each patient receives a unique, facility-prefixed MRN in the format:
    - Compatibility with Healthcare module updates
    - Clean separation of concerns
    - Easy migration and backup
-
 2. **Separate Sequence Table**: The `MRN Sequence` doctype tracks running numbers per hospital per year, allowing:
    - Automatic reset at year boundaries
    - Multi-facility support
    - Audit trail of sequence usage
-
 3. **Server-side Hook (before_insert)**: MRN generation happens server-side before the patient record is saved:
    - Guarantees uniqueness through database-level locking
    - Works in concurrent environments
    - Cannot be bypassed by client-side code
-
 4. **Database-level Locking**: Uses `SELECT ... FOR UPDATE` for thread-safe sequence generation:
    - Prevents duplicate MRNs in high-concurrency scenarios
    - Ensures atomic increment operations
@@ -75,7 +61,6 @@ Each patient receives a unique, facility-prefixed MRN in the format:
    Hospital Name: Karbala General Hospital
    Hospital Code: KRBHOSP
    ```
-
 2. **Optional Default Hospital**: Set a default hospital in Mofeed HIS Settings (if the doctype exists) for facilities with a single hospital.
 
 ### Indexing
@@ -112,7 +97,6 @@ Tracks running MRN sequence per hospital per year:
 - `year`: Year for the sequence
 - `current_value`: Current running number
 
->>>>>>> 4d8907c (Add mofeed_his Frappe app with MRN generation feature)
 ## License
 
 MIT
