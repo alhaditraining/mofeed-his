@@ -13,6 +13,7 @@ This repository contains:
 - [Product Definition (PDR)](docs/PDR.md)
 - [Roadmap](docs/roadmap.md)
 - [UI Wireframes](docs/ui-wireframes.md)
+- [Login Language Handler](docs/login-language-handler.md) – Technical docs on login flow and language handling
 
 ## Tech Stack (planned)
 
