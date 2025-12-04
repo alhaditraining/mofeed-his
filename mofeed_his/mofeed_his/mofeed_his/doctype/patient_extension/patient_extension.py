@@ -35,6 +35,7 @@ class PatientExtension(Document):
 		nationality: DF.Data | None
 		neighborhood: DF.Data | None
 		patient_link: DF.Link
+		preferred_language: DF.Literal["", "ar", "en", "ku"]
 		primary_phone: DF.Data | None
 		registration_date: DF.Date | None
 		secondary_phone: DF.Data | None
@@ -83,3 +84,52 @@ class PatientExtension(Document):
 				next_number = int(match.group(1)) + 1
 
 		return f"{year}-{prefix}-{next_number:05d}"
+
+
+def get_or_create_patient_extension(patient_name, hospital=None):
+	"""
+	Returns the PatientExtension document for the given patient.
+	If it doesn't exist, creates a new one and returns it.
+
+	Args:
+		patient_name (str): The name/id of the Patient document
+		hospital (str, optional): The hospital name for new extensions
+
+	Returns:
+		PatientExtension: The PatientExtension document for the given patient
+
+	Raises:
+		frappe.DoesNotExistError: If the patient does not exist
+	"""
+	if not patient_name:
+		frappe.throw("Patient name is required")
+
+	# Verify patient exists
+	if not frappe.db.exists("Patient", patient_name):
+		frappe.throw(
+			f"Patient {patient_name} does not exist",
+			frappe.DoesNotExistError
+		)
+
+	# Try to get existing extension
+	extension_name = frappe.db.get_value(
+		"Patient Extension",
+		{"patient_link": patient_name},
+		"name"
+	)
+
+	if extension_name:
+		return frappe.get_doc("Patient Extension", extension_name)
+
+	# Create new extension
+	extension_data = {
+		"doctype": "Patient Extension",
+		"patient_link": patient_name
+	}
+	if hospital:
+		extension_data["hospital"] = hospital
+
+	extension = frappe.get_doc(extension_data)
+	extension.insert(ignore_permissions=True)
+
+	return extension
