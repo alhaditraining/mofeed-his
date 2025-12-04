@@ -13,6 +13,7 @@ class Clinic(Document):
 
 	if TYPE_CHECKING:
 		from frappe.types import DF
+		from mofeed_his.mofeed_his.mofeed_his.doctype.clinic_service.clinic_service import ClinicService
 
 		clinic_code: DF.Data
 		clinic_name: DF.Data
@@ -23,6 +24,7 @@ class Clinic(Document):
 		hospital: DF.Link
 		is_active: DF.Check
 		max_patients_per_slot: DF.Int
+		services: DF.Table[ClinicService]
 		slot_duration: DF.Int
 		specialty: DF.Literal["", "General Practice", "Internal Medicine", "Pediatrics", "Dermatology", "Orthopedics", "Cardiology", "Neurology", "Ophthalmology", "ENT", "Obstetrics & Gynecology", "General Surgery", "Urology", "Psychiatry", "Dentistry", "Radiology", "Pathology", "Emergency Medicine", "Anesthesiology", "Oncology", "Nephrology", "Gastroenterology", "Pulmonology", "Endocrinology", "Rheumatology", "Physical Therapy"]
 		working_days: DF.Literal["", "Sunday to Thursday", "Saturday to Thursday", "Saturday to Wednesday", "All Week"]

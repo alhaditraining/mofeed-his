@@ -1,0 +1,69 @@
+{
+  "actions": [],
+  "allow_rename": 0,
+  "autoname": "format:{hospital_code}-{year}",
+  "creation": "2025-01-01 00:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "hospital_code",
+    "year",
+    "column_break_1",
+    "current_value"
+  ],
+  "fields": [
+    {
+      "fieldname": "hospital_code",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Hospital Code",
+      "reqd": 1
+    },
+    {
+      "fieldname": "year",
+      "fieldtype": "Int",
+      "in_list_view": 1,
+      "label": "Year",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "0",
+      "description": "Current running number in the sequence",
+      "fieldname": "current_value",
+      "fieldtype": "Int",
+      "in_list_view": 1,
+      "label": "Current Value",
+      "reqd": 1
+    }
+  ],
+  "index_web_pages_for_search": 0,
+  "links": [],
+  "modified": "2025-01-01 00:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Mofeed HIS",
+  "name": "MRN Sequence",
+  "naming_rule": "Expression",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1
+}

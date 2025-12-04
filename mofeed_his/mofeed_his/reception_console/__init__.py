@@ -1,0 +1,1 @@
+# Reception Console Page

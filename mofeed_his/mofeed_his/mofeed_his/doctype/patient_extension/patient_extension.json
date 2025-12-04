@@ -16,6 +16,7 @@
   "national_id",
   "national_id_type",
   "nationality",
+  "preferred_language",
   "column_break_2",
   "mother_name",
   "tribe",
@@ -109,6 +110,15 @@
    "fieldname": "nationality",
    "fieldtype": "Data",
    "label": "Nationality"
+  },
+  {
+   "fieldname": "preferred_language",
+   "fieldtype": "Select",
+   "label": "Preferred Language",
+   "options": "ar\nen\nku",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "description": "Patient's preferred language for communication"
   },
   {
    "fieldname": "column_break_2",
